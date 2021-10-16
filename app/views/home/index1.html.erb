@@ -1,0 +1,7 @@
+<% @seats.each do |seat| %>
+<p>
+<%= seat.number %>番席
+<%= seat.is_used ? "使用中" : "未使用" %>
+<%= link_to '更新', seat_path(seat, seat: {is_used: !seat.is_used}), method: :put %>
+</p>
+<% end %>

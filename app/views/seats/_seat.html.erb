@@ -1,0 +1,7 @@
+<%= link_to seat_path(seat, seat: {is_used: !seat.is_used}),class: "absolute_tenpo#{seat.number}", method: :put, remote: true do %>
+  <% if seat.is_used %>
+    <i class="fas fa-user-slash fa-4x"></i>
+  <% else %>
+    <i class="fas fa-user fa-4x"></i>
+  <% end %>
+<% end %>

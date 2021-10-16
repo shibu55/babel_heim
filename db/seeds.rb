@@ -11,3 +11,9 @@ Admin.create!(
   email: 'babelheim@admin',
   password: 'onmyoji0'
 )
+
+20.times do |n|
+  Seat.create!(
+    number: n+1,
+  )
+end
