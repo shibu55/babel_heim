@@ -56,6 +56,11 @@
         <li class="nav-item"><%= link_to 'GALLERY', root_path(anchor: 'GALLERY'), class: "nav-link" %></li>
         <li class="nav-item"><%= link_to 'ACCESS', root_path(anchor: 'ACCESS'), class: "nav-link" %></li>
         <li class="nav-item"><%= link_to 'NEWS', root_path(anchor: 'NEWS'), class: "nav-link" %></li>
+        <% if admin_signed_in? %>
+          <li>
+            <%= link_to "LOGOUT", destroy_admin_session_path, method: :delete, class: "nav-link" %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </nav>
@@ -68,6 +73,11 @@
   </div> %>
   <!-- トップ画像内文字 -->
   <div class="text-white position-absolute main-txt">
+    <% if admin_signed_in? %>
+      <h1 style="color:red;">
+        管理者画面
+      </h1>
+    <% end %>
     <h1 class="display-4">BabelHeim</h1>
     <p class="lead">石橋駅徒歩3分のシーシャカフェバー 平常時Open:13:00〜23:00 定休日:木曜日、不定休 喫煙可です<br/>カフェやバーのみのご利用もお待ちしています♪</p>
   </div>
@@ -85,6 +95,24 @@
       <img src="assets/tenpo.png" alt="" class="tenpo-image" />
       <% @seats.first(7).each do |seat| %>
         <%= render partial: 'seats/seat', locals: { seat: seat} %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="py-5">
+    <div class="container">
+      <% if admin_signed_in? %>
+        <%= link_to '休日追加', new_holiday_path %>
+      <% end %>
+      <%= month_calendar events: @holidays do |date, holidays| %>
+        <%= date.day %>
+        <% holidays.each do |holiday| %>
+        <div>
+          <%= holiday.title %>
+        </div>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -269,7 +297,7 @@
   <div class="container text-center">
     <h2 class="display-3 pb-3">ACCESS</h2>
     <div class="mb-3 text-center">
-      <p class="mb-0">アクセス：阪急宝塚線「石橋阪大前」下車&ensp;<br class="d-block d-md-none">南口改札&ensp;徒歩3分</p>
+      <p class="mb-0">アクセス：阪急宝塚線「石橋阪大前」下車&ensp;<br class="d-block d-md-none">西改札口&ensp;徒歩3分</p>
     </div>
   </div>
   <!-- 地図 -->

@@ -1,4 +1,5 @@
 class SeatsController < ApplicationController
+  before_action :authenticate_admin!
   def update
     @seat = Seat.find(params[:id])
     @seat.is_used = !@seat.is_used

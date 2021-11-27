@@ -240,9 +240,11 @@ iframe {
 
 .fa-user {
   color: blue;
+  font-size: 4rem;
 }
 .fa-user-slash {
   color: red;
+  font-size: 4rem;
 }
 
 .tenpo-image {
@@ -285,7 +287,7 @@ iframe {
 }
 .absolute_tenpo7 {
   position: absolute;
-  top: 75%;
+  top: 79%;
   left: 85%;
 }
 
@@ -468,10 +470,10 @@ input[type]:focus {
   }
 
   .fa-user {
-    color: blue;
+    font-size: 1rem;
   }
   .fa-user-slash {
-    color: red;
+    font-size: 1rem;
   }
   
   .tenpo-image {
