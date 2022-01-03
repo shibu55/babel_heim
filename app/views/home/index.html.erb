@@ -71,7 +71,7 @@
 <div class="jumbotron-fluid position-relative top-image p-0">
   <!-- ロゴ -->
   <%# <div class="logo-mark position-absolute">
-    <img src="assets/logo.png" alt="ロゴマーク" class="position-absolute">
+    <%= image_tag "logo.png" alt="ロゴマーク" class="position-absolute" %>
   </div> %>
   <!-- トップ画像内文字 -->
   <div class="text-white position-absolute main-txt">
@@ -98,7 +98,7 @@
   <div class="container-fluid">
    <div class="row py-5">
       <div class="col-12 col-lg-5 order-md-2 p-lg-0 mb-3">
-        <img src="assets/shisha2.jpg" alt="" class="w-100 about-img">
+        <%= image_tag "shisha2.jpg", class: "w-100 about-img" %>
       </div>
       <div class="col-12 col-lg-5 order-md-1 ml-md-auto">
         <h3 class="mb-3 h2">シーシャ</h3>
@@ -109,7 +109,7 @@
     </div>
     <div class="row py-5">
       <div class="col-12 col-lg-5 order-1 p-lg-0 mb-3">
-        <img src="assets/prohibits.jpg" alt="" class="w-100 about-img">
+        <%= image_tag "prohibits.jpg", class: "w-100 about-img" %>
       </div>
       <div class="col-12 col-lg-5 order-2 mr-md-auto">
         <h3 class="mb-3 h2">食べ物持ち込みOK！</h3>
@@ -156,7 +156,7 @@
     </p>
     </div>
     <div class="relative_tenpo">
-      <img src="assets/tenpo.png" alt="" class="tenpo-image" />
+      <%= image_tag "tenpo.png", class: "tenpo-image" %>
       <% @seats.first(7).each do |seat| %>
         <%= render partial: 'seats/seat', locals: { seat: seat} %>
       <% end %>
@@ -175,7 +175,7 @@
   <div class="container-fluid">
     <div class="row py-5">
       <div class="col-12 col-lg-5 order-md-2 p-lg-0 mb-3">
-        <img src="assets/open-seat.jpg" alt="" class="w-100 about-img">
+        <%= image_tag "open-seat.jpg", class: "w-100 about-img" %>
       </div>
       <div class="col-12 col-lg-5 order-md-1 ml-md-auto">
         <h3 class="mb-3 h2">カウンター</h3>
@@ -187,7 +187,7 @@
 
     <div class="row py-5">
       <div class="col-12 col-lg-5 order-1 p-lg-0 mb-3">
-        <img src="assets/sofa-seat.jpg" alt="" class="w-100 about-img">
+        <%= image_tag "sofa-seat.jpg", class: "w-100 about-img" %>
       </div>
       <div class="col-12 col-lg-5 order-2 mr-md-auto">
         <h3 class="mb-3 h2">ソファ</h3>
@@ -199,7 +199,7 @@
 
     <div class="row py-5">
       <div class="col-12 col-lg-5 order-md-2 p-lg-0 mb-3">
-        <img src="assets/pair-seat.jpg" alt="" class="w-100 about-img">
+        <%= image_tag "pair-seat.jpg", class: "w-100 about-img" %>
       </div>
       <div class="col-12 col-lg-5 order-md-1 ml-md-auto">
         <h3 class="mb-3 h2">座敷</h3>
@@ -211,126 +211,6 @@
 
   </div>
 </div>
-
-
-<!-- パーティプラン -->
-<%# <div class="zigzag text-white">
-  <div class="container py-5">
-    <div class="row py-5">
-    <h1>
-    
-    </h1>
-
-      <div class="col-lg-6">
-        <h2 class="party-title mx-auto h3">パーティ・二次会など貸切できます！</h2>
-        <p>
-          親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど腰を抜かした事がある。
-          なぜそんな無闇をしたと聞く人があるかも知れぬ。別段深い理由でもない。
-        </p>
-        <div class="d-flex flex-row mb-3">
-          <img src="assets/party-left-1.jpg" alt="" class="h-100 col-6 p-0 mr-lg-3">
-          <img src="assets/party-left-2.jpg" alt="" class="h-100 col-6 p-0">
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <img src="assets/party-right.jpg" alt="" class="w-100 mb-3">
-        <p class="mb-5">
-          親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど腰を抜かした事がある。
-          なぜそんな無闇をしたと聞く人があるかも知れぬ。別段深い理由でもない。新築の二階から首を出していたら、同級生の一人が冗談に、いくら威張っても、そこから飛び降りる事は出来まい。
-        </p>
-        <!-- ボタン -->
-        <button type="button" class="btn btn-secondary btn-lg d-block mx-auto ">パーティプランをみる</button>
-      </div>
-    </div>
-  </div>
-</div> %>
-
-
-<!-- フードメニュー -->
-<%# <div class="py-5">
-  <div class="container">
-    <h2 class="text-center display-3 py-2">MENU</h2>
-    <p class="mx-auto w-75">
-      親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど腰を抜かした事がある。
-      なぜそんな無闇をしたと聞く人があるかも知れぬ。別段深い理由でもない。
-    </p>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="card mb-4 border border-0">
-          <img src="assets/menu-image-1.jpg" alt="" class="border card-img-top">
-          <div class="card-body">
-            <h3 class="card-title">DAILY SPECIAL</h3>
-            <p class="card-text mb-lg-4">親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど</p>
-            <div class="text-center">
-              <a class="btn btn-outline-secondary d-block d-md-inline-block mb-2 mb-md-0" href="sample/index.html" role="button">メニューをみる</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card mb-4 border border-0">
-          <img src="assets/menu-image-2.jpg" alt="" class="border card-img-top">
-          <div class="card-body">
-            <h3 class="card-title">LUNCH SET</h3>
-            <p class="card-text mb-lg-4">親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど</p>
-            <div class="text-center">
-              <a class="btn btn-outline-secondary d-block d-md-inline-block mb-2 mb-md-0" href="sample/index.html" role="button">メニューをみる</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card mb-4 border border-0">
-          <img src="assets/menu-image-3.jpg" alt="" class="border card-img-top">
-          <div class="card-body">
-            <h3 class="card-title">MORNING SET</h3>
-            <p class="card-text mb-lg-4">親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど</p>
-            <div class="text-center">
-              <a class="btn btn-outline-secondary d-block d-md-inline-block mb-2 mb-md-0" href="sample/index.html" role="button">メニューをみる</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card mb-4 border border-0">
-          <img src="assets/menu-image-4.jpg" alt="" class="border card-img-top">
-          <div class="card-body">
-            <h3 class="card-title">SNACK</h3>
-            <p class="card-text mb-lg-4">親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど</p>
-            <div class="text-center">
-              <a class="btn btn-outline-secondary d-block d-md-inline-block mb-2 mb-md-0" href="sample/index.html" role="button">メニューをみる</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card mb-4 border border-0">
-          <img src="assets/menu-image-5.jpg" alt="" class="border card-img-top">
-          <div class="card-body">
-            <h3 class="card-title">DESSERT</h3>
-            <p class="card-text mb-lg-4">親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど</p>
-            <div class="text-center">
-              <a class="btn btn-outline-secondary d-block d-md-inline-block mb-2 mb-md-0" href="sample/index.html" role="button">メニューをみる</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card mb-4 border border-0">
-          <img src="assets/menu-image-6.jpg" alt="" class="border card-img-top">
-          <div class="card-body">
-            <h3 class="card-title">DRINK</h3>
-            <p class="card-text mb-lg-4">親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど</p>
-            <div class="text-center">
-              <a class="btn btn-outline-secondary d-block d-md-inline-block mb-2 mb-md-0" href="sample/index.html" role="button">メニューをみる</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div><!-- /.album	--> %>
-
 
 
 <!-- アクセス -->
@@ -350,40 +230,10 @@
   <div class="container-fulid py-5">
     <div class="container">
       <div class="row">
-        <!-- ニュース -->
-        <%# <div class="col-12 col-lg-7">
-          <div class="container">
-            <h2 class="display-4 text-center pb-3">NEWS</h2>
-            <div class="d-lg-flex flex-row mb-3">
-              <img src="assets/coffee.jpg" alt="" class="h-100 col-lg-6 p-0 mb-3 mb-lg-0">
-              <div class="col-lg-6">
-                <h3>タイトルが入ります</h3>
-                <p>
-                  親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど腰を抜かした事がある。
-                  なぜそんな無闇をしたと聞く人があるかも知れぬ。別段
-                </p>
-                <span><i class="fas fa-heart"></i> 609</span>
-                <span><i class="far fa-comments"></i> 120</span>
-              </div>
-            </div>
-            <div class="d-lg-flex flex-row mb-3">
-              <img src="assets/coffee.jpg" alt="" class="h-100 col-lg-6 p-0 mb-3 mb-lg-0">
-              <div class="col-lg-6">
-                <h3>タイトルが入ります</h3>
-                <p>
-                  親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど腰を抜かした事がある。
-                  なぜそんな無闇をしたと聞く人があるかも知れぬ。別段
-                </p>
-                <span><i class="fas fa-heart"></i> 609</span>
-                <span><i class="far fa-comments"></i> 120</span>
-              </div>
-            </div>
-          </div>
-        </div> %>
         <!-- 店舗情報 -->
         <%# <div class="col-12 col-lg-5">
           <div class="stitch text-white">
-            <img src="assets/template-logo.png" alt="フッターロゴ" class="mb-4">
+            <%= image_tag "template-logo.png" alt="フッターロゴ" class="mb-4" %>
             <p class="text-center h4 mb-4"><a href="#" class="text-white">http://babel_heim.com/</a></p>
             <hr class="bg-white my-lg-4">
             <address class="h5 font-weight-bold">
