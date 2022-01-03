@@ -27,3 +27,5 @@ production:
   username: root
   password: <%= ENV['DATABASE_PASSWORD'] %>
   socket: /var/lib/mysql/mysql.sock
+  encoding: utf8mb4
+  charset: utf8mb4
