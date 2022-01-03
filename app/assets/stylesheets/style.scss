@@ -57,6 +57,10 @@ header a,
   font-family: 'Comfortaa', cursive;
 }
 
+header {
+  height: 100px;
+}
+
 /* パンくずリスト */
 .breadcrumb {
   background: transparent;
@@ -79,6 +83,10 @@ header a,
   color: #fff;
   text-align: center;
   font-weight: bold;
+}
+
+.top-logo {
+  visibility: hidden;
 }
 
 .top-stitch p {
@@ -119,30 +127,34 @@ header a,
 /* ギザギザ線 */
 .zigzag {
   position: relative;
-  margin: 5% 0;
-  padding: 0;
+  margin: 0;
+  padding-top: 0;
   background-color: #a9a9a9;
 }
 
-.zigzag::before,
-.zigzag::after {
-  position: absolute;
-  width: 100%;
-  height: 60px;
-  content: "";
+.about-img{
+  max-height: 300px;
 }
 
-.zigzag::before {
-  top: -60px;
-  background: linear-gradient(45deg, #a9a9a9 30px, transparent 0), linear-gradient(315deg, #a9a9a9 30px, transparent 0);
-  background-size: 60px 60px;
-}
+// .zigzag::before,
+// .zigzag::after {
+//   position: absolute;
+//   width: 100%;
+//   height: 60px;
+//   content: "";
+// }
 
-.zigzag::after {
-  bottom: -60px;
-  background: linear-gradient(135deg, #a9a9a9 30px, transparent 0), linear-gradient(225deg, #a9a9a9 30px, transparent 0);
-  background-size: 60px 60px;
-}
+// .zigzag::before {
+//   top: -60px;
+//   background: linear-gradient(45deg, #a9a9a9 30px, transparent 0), linear-gradient(315deg, #a9a9a9 30px, transparent 0);
+//   background-size: 60px 60px;
+// }
+
+// .zigzag::after {
+//   bottom: -60px;
+//   background: linear-gradient(135deg, #a9a9a9 30px, transparent 0), linear-gradient(225deg, #a9a9a9 30px, transparent 0);
+//   background-size: 60px 60px;
+// }
 
 /* 薄い背景のギザギザ線 */
 .light-zigzag {
@@ -152,30 +164,30 @@ header a,
   background-color: #f8f9fa;
 }
 
-.light-zigzag::before,
-.light-zigzag::after {
-  position: absolute;
-  width: 100%;
-  height: 60px;
-  content: "";
-}
+// .light-zigzag::before,
+// .light-zigzag::after {
+//   position: absolute;
+//   width: 100%;
+//   height: 60px;
+//   content: "";
+// }
 
-.light-zigzag::before {
-  top: -60px;
-  background: linear-gradient(45deg, #f8f9fa 30px, transparent 0), linear-gradient(315deg, #f8f9fa 30px, transparent 0);
-  background-size: 60px 60px;
-}
+// .light-zigzag::before {
+//   top: -60px;
+//   background: linear-gradient(45deg, #f8f9fa 30px, transparent 0), linear-gradient(315deg, #f8f9fa 30px, transparent 0);
+//   background-size: 60px 60px;
+// }
 
-.light-zigzag::after {
-  bottom: -60px;
-  background: linear-gradient(135deg, #f8f9fa 30px, transparent 0), linear-gradient(225deg, #f8f9fa 30px, transparent 0);
-  background-size: 60px 60px;
-}
+// .light-zigzag::after {
+//   bottom: -60px;
+//   background: linear-gradient(135deg, #f8f9fa 30px, transparent 0), linear-gradient(225deg, #f8f9fa 30px, transparent 0);
+//   background-size: 60px 60px;
+// }
 
 /* ギザギザ線なし */
-.zigzag-none:after {
-  content: none !important;
-}
+// .zigzag-none:after {
+//   content: none !important;
+// }
 
 /* コピーライトのギザギザ線 */
 .zigzag-copy {
@@ -184,15 +196,15 @@ header a,
   background-color: #a9a9a9;
 }
 
-.zigzag-copy::before {
-  position: absolute;
-  width: 100%;
-  height: 60px;
-  content: "";
-  top: -60px;
-  background: linear-gradient(45deg, #a9a9a9 30px, transparent 0), linear-gradient(315deg, #a9a9a9 30px, transparent 0);
-  background-size: 60px 60px;
-}
+// .zigzag-copy::before {
+//   position: absolute;
+//   width: 100%;
+//   height: 60px;
+//   content: "";
+//   top: -60px;
+//   background: linear-gradient(45deg, #a9a9a9 30px, transparent 0), linear-gradient(315deg, #a9a9a9 30px, transparent 0);
+//   background-size: 60px 60px;
+// }
 
 /* ------------------------------
 地図サイズ
@@ -228,10 +240,12 @@ iframe {
 
 /* トップ画像 */
 .top-image {
-  background-image: image-url("main.jpg");
-  background-size: cover;
-  background-position: center center;
-  height: 650px;
+  // background-image: image-url("main.jpg");
+  background: url("babel-logo.jpg") no-repeat center top;;
+  background-size: contain;
+  background-position: center;
+  width: 100%;
+  height: calc(100vh - 100px);
   box-shadow: 0px 5px 6px 0px #e2e2e2;
   border-radius: 0;
 }
@@ -353,11 +367,11 @@ input[type]:focus {
   }
 
   .zigzag {
-    margin: 10% 0;
+    // margin: 10% 0;
   }
 
   .light-zigzag {
-    margin: 10% 0 0;
+    // margin: 10% 0 0;
   }
 
   .fa-user {
@@ -462,7 +476,7 @@ input[type]:focus {
 
   .zigzag,
   .light-zigzag {
-    margin: 15% 0;
+    // margin: 15% 0;
   }
 
   .stitch img {

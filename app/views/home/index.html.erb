@@ -31,9 +31,11 @@
 <header class="container-fluid mb-3 mb-md-0">
   <!-- 営業時間 -->
   <div class="d-md-flex justify-content-between">
-    <div class="col-8 col-lg-3 d-none d-md-block top-stitch rounded-bottom">
+    <%# <div class="col-8 col-lg-3 d-none d-md-block top-stitch rounded-bottom">
       <p class="mb-0">OPEN 13:00 - CLOSE 21:00 (LO.20:30)</p>
-    </div>
+    </div> %>
+    <%# ロゴで表示したい %>
+    <h1 class="top-logo">BabelHeim</h1>
     <!-- SNSアイコン -->
     <div class="mt-2 ml-auto float-right float-md-none">
       <!-- Twitter -->
@@ -52,11 +54,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbar-header">
       <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><%= link_to 'ABOUT', root_path(anchor: 'ABOUT'), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to 'CALENDAR', root_path(anchor: 'CALENDAR'), class: "nav-link" %></li>
         <li class="nav-item"><%= link_to 'ATTENDING', root_path(anchor: 'ATTENDING'), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to 'GALLERY', root_path(anchor: 'GALLERY'), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to 'ACCESS', root_path(anchor: 'ACCESS'), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to 'NEWS', root_path(anchor: 'NEWS'), class: "nav-link" %></li>
         <% if admin_signed_in? %>
+        <li class="nav-item"><%= link_to 'ACCESS', root_path(anchor: 'ACCESS'), class: "nav-link" %></li>
           <li>
             <%= link_to "LOGOUT", destroy_admin_session_path, method: :delete, class: "nav-link" %>
           </li>
@@ -79,11 +81,73 @@
       </h1>
     <% end %>
     <h1 class="display-4">BabelHeim</h1>
-    <p class="lead">石橋駅徒歩3分のシーシャカフェバー 平常時Open:13:00〜23:00 定休日:木曜日、不定休 喫煙可です<br/>カフェやバーのみのご利用もお待ちしています♪</p>
   </div>
 </div>
 
-<div class="zigzag text-white" id="ATTENDING">
+<!-- 店内紹介 -->
+<div class="zigzag text-white py-5" id = "ABOUT">
+  <div class="container">
+
+    <h2 class="text-center display-3 pb-3">About</h2>
+    <p class="text-center mx-auto mb-5 col-md-10">
+      石橋駅徒歩3分のシーシャカフェバー<br/>
+      Open:13:00〜23:00 定休日:木曜日、不定休 喫煙可です<br/>
+      カフェやバーのみのご利用もお待ちしています♪
+    </p>
+  </div>
+  <div class="container-fluid">
+   <div class="row py-5">
+      <div class="col-12 col-lg-5 order-md-2 p-lg-0 mb-3">
+        <img src="assets/shisha2.jpg" alt="" class="w-100 about-img">
+      </div>
+      <div class="col-12 col-lg-5 order-md-1 ml-md-auto">
+        <h3 class="mb-3 h2">シーシャ</h3>
+        <p>
+          1400円から吸えます。1400円から吸えます。1400円から吸えます。1400円から吸えます。1400円から吸えます。1400円から吸えます。1400円から吸えます。1400円から吸えます。1400円から吸えます。1400円から吸えます。1400円から吸えます。
+        </p>
+      </div>
+    </div>
+    <div class="row py-5">
+      <div class="col-12 col-lg-5 order-1 p-lg-0 mb-3">
+        <img src="assets/prohibits.jpg" alt="" class="w-100 about-img">
+      </div>
+      <div class="col-12 col-lg-5 order-2 mr-md-auto">
+        <h3 class="mb-3 h2">食べ物持ち込みOK！</h3>
+        <p>
+          皆様がシーシャの香りを楽しんでいただけるよう、<br/>
+          匂いの強い食べ物はご遠慮ください。<br/>
+          カフェバーなので飲み物のお持ち込みはご遠慮ください。
+
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- カレンダー -->
+<div class="py-5" id="CALENDAR">
+  <div class="py-5">
+  <h2 class="text-center display-3 pb-3">Calendar</h2>
+    <div class="container">
+      <% if admin_signed_in? %>
+        <%= link_to '休日追加', new_holiday_path %>
+      <% end %>
+      <%= month_calendar events: @holidays do |date, holidays| %>
+        <%= date.day %>
+        <% holidays.each do |holiday| %>
+        <div>
+          <%= holiday.title %>
+        </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- 混雑状況 -->
+<div class="zigzag text-white py-5" id="ATTENDING">
   <div class="py-5">
     <div class="container">
       <h2 class="text-center display-3 pb-3">ATTENDING</h2>
@@ -100,23 +164,54 @@
   </div>
 </div>
 
-<div>
-  <div class="py-5">
-    <div class="container">
-      <% if admin_signed_in? %>
-        <%= link_to '休日追加', new_holiday_path %>
-      <% end %>
-      <%= month_calendar events: @holidays do |date, holidays| %>
-        <%= date.day %>
-        <% holidays.each do |holiday| %>
-        <div>
-          <%= holiday.title %>
-        </div>
-        <% end %>
-      <% end %>
+<div class="py-5" id = "SPACE">
+  <div class="container">
+
+    <h2 class="text-center display-3 pb-3">SPACE</h2>
+    <p class="text-center mx-auto mb-5 col-md-10">
+      座席の紹介
+    </p>
+  </div>
+  <div class="container-fluid">
+    <div class="row py-5">
+      <div class="col-12 col-lg-5 order-md-2 p-lg-0 mb-3">
+        <img src="assets/open-seat.jpg" alt="" class="w-100 about-img">
+      </div>
+      <div class="col-12 col-lg-5 order-md-1 ml-md-auto">
+        <h3 class="mb-3 h2">カウンター</h3>
+        <p>
+          カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。カウンター席のPR。
+        </p>
+      </div>
     </div>
+
+    <div class="row py-5">
+      <div class="col-12 col-lg-5 order-1 p-lg-0 mb-3">
+        <img src="assets/sofa-seat.jpg" alt="" class="w-100 about-img">
+      </div>
+      <div class="col-12 col-lg-5 order-2 mr-md-auto">
+        <h3 class="mb-3 h2">ソファ</h3>
+        <p>
+          ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。ソファ席のPR。
+        </p>
+      </div>
+    </div>
+
+    <div class="row py-5">
+      <div class="col-12 col-lg-5 order-md-2 p-lg-0 mb-3">
+        <img src="assets/pair-seat.jpg" alt="" class="w-100 about-img">
+      </div>
+      <div class="col-12 col-lg-5 order-md-1 ml-md-auto">
+        <h3 class="mb-3 h2">座敷</h3>
+        <p>
+          座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。座敷席のPR。
+        </p>
+      </div>
+    </div>
+
   </div>
 </div>
+
 
 <!-- パーティプラン -->
 <%# <div class="zigzag text-white">
@@ -236,64 +331,10 @@
   </div>
 </div><!-- /.album	--> %>
 
-<!-- 店内紹介 -->
-<div class="py-5" id = "GALLERY">
-  <div class="container">
 
-    <h2 class="text-center display-3 pb-3">GALLERY</h2>
-    <p class="mx-auto mb-5 col-md-10">
-      親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど腰を抜かした事がある。
-      なぜそんな無闇をしたと聞く人があるかも知れぬ。別段深い理由でもない。
-    </p>
-  </div>
-  <div class="container-fluid">
-    <div class="row py-5">
-      <div class="col-12 col-lg-5 order-md-2 p-lg-0 mb-3">
-        <img src="assets/shisha2.jpg" alt="" class="w-100">
-      </div>
-      <div class="col-12 col-lg-5 order-md-1 ml-md-auto">
-        <h3 class="mb-3 h2">タイトルが入ります</h3>
-        <p>
-          親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど腰を抜かした事がある。
-          なぜそんな無闇をしたと聞く人があるかも知れぬ。別段深い理由でもない。新築の二階から首を出していたら、同級生の一人が冗談に、
-          いくら威張っても、そこから飛び降りる事は出来まい。弱虫やーい。と囃した
-        </p>
-      </div>
-    </div>
-
-    <div class="row py-5">
-      <div class="col-12 col-lg-5 order-1 p-lg-0 mb-3">
-        <img src="assets/babel_logo.jpg" alt="" class="w-100">
-      </div>
-      <div class="col-12 col-lg-5 order-2 mr-md-auto">
-        <h3 class="mb-3 h2">タイトルが入ります</h3>
-        <p>
-          親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど腰を抜かした事がある。
-          なぜそんな無闇をしたと聞く人があるかも知れぬ。別段深い理由でもない。新築の二階から首を出していたら、同級生の一人が冗談に、
-          いくら威張っても、そこから飛び降りる事は出来まい。弱虫やーい。と囃した
-        </p>
-      </div>
-    </div>
-
-    <div class="row py-5">
-      <div class="col-12 col-lg-5 order-md-2 p-lg-0 mb-3">
-        <img src="assets/shisha1.jpg" alt="" class="w-100">
-      </div>
-      <div class="col-12 col-lg-5 order-md-1 ml-md-auto">
-        <h3 class="mb-3 h2">タイトルが入ります</h3>
-        <p>
-          親譲りの無鉄砲で小供の時から損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど腰を抜かした事がある。
-          なぜそんな無闇をしたと聞く人があるかも知れぬ。別段深い理由でもない。新築の二階から首を出していたら、同級生の一人が冗談に、
-          いくら威張っても、そこから飛び降りる事は出来まい。弱虫やーい。と囃した
-        </p>
-      </div>
-    </div>
-
-  </div>
-</div>
 
 <!-- アクセス -->
-<div class="access pt-2" id = "ACCESS">
+<div class="zigzag text-white access pt-5" id = "ACCESS">
   <div class="container text-center">
     <h2 class="display-3 pb-3">ACCESS</h2>
     <div class="mb-3 text-center">
@@ -305,12 +346,12 @@
 </div>
 
 <!-- 下部コンテンツ -->
-<div class="light-zigzag zigzag-none mb-0" id = "NEWS">
+<div class="zigzag text-white mb-0" id = "NEWS">
   <div class="container-fulid py-5">
     <div class="container">
       <div class="row">
         <!-- ニュース -->
-        <div class="col-12 col-lg-7">
+        <%# <div class="col-12 col-lg-7">
           <div class="container">
             <h2 class="display-4 text-center pb-3">NEWS</h2>
             <div class="d-lg-flex flex-row mb-3">
@@ -338,7 +379,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> %>
         <!-- 店舗情報 -->
         <%# <div class="col-12 col-lg-5">
           <div class="stitch text-white">
@@ -361,7 +402,7 @@
 </div>
 <!-- フッター -->
 <footer class="py-3 m-0 zigzag-copy">
-  <p class="text-center mb-0"><small class="text-white">20XX &copy; あなたのサイト名 All Right Reserved.</small></p>
+  <p class="text-center mb-0"><small class="text-white">2021 &copy; BabelHeim All Right Reserved.</small></p>
 </footer>
 
 <!-- javascript はここから -->

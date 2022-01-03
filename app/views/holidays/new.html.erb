@@ -1,4 +1,7 @@
 <h1>休日の設定画面</h1>
+<p>
+  <%= link_to 'ホーム画面へ', root_path %>
+</p>
 
 <%= form_with(model: @holiday, url: holidays_path, local: true) do |form| %>
 
@@ -19,7 +22,25 @@
 
 
   <div class="submit">
-    <%= form.submit %>
+    <%= form.submit '追加する' %>
   </div>
 
 <% end %>
+<div>
+<%= month_calendar events: @holidays do |date, holidays| %>
+  <%= date.day %>
+  <% holidays.each do |holiday| %>
+  <div>
+    <p>
+      <%= holiday.title %>
+    </p>
+    <p>
+      <%= link_to 'Edit', edit_holiday_path(holiday.id) %>
+    </p>
+    <p>
+      <%= link_to 'Destroy',holiday_path(holiday.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+    </p>
+  </div>
+  <% end %>
+<% end %>
+</div>
