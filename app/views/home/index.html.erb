@@ -61,8 +61,8 @@
         <li class="nav-item"><%= link_to 'ABOUT', root_path(anchor: 'ABOUT'), class: "nav-link" %></li>
         <li class="nav-item"><%= link_to 'CALENDAR', root_path(anchor: 'CALENDAR'), class: "nav-link" %></li>
         <li class="nav-item"><%= link_to 'ATTENDING', root_path(anchor: 'ATTENDING'), class: "nav-link" %></li>
-        <% if admin_signed_in? %>
         <li class="nav-item"><%= link_to 'ACCESS', root_path(anchor: 'ACCESS'), class: "nav-link" %></li>
+        <% if admin_signed_in? %>
           <li>
             <%= link_to "LOGOUT", destroy_admin_session_path, method: :delete, class: "nav-link" %>
           </li>
