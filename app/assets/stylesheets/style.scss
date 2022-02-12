@@ -50,11 +50,16 @@ h6 {
 
 /* 英字タイトルをWEBフォントに */
 header a,
-.display-4,
-.display-3,
+.display,
 .lead,
 .circle-badges {
   font-family: 'Comfortaa', cursive;
+}
+
+.display {
+  font-size: 4.5rem;
+  font-weight: 300;
+  line-height: 1.2;
 }
 
 header {
@@ -133,6 +138,7 @@ header {
 }
 
 .about-img{
+  width: 100%;
   max-height: 300px;
 }
 
@@ -373,6 +379,10 @@ input[type]:focus {
 /* 中デバイス（タブレット, 992px 未満）
 ============================================== */
 @media screen and (max-width: 991.98px) {
+  .about-img{
+    width: 60%;
+    max-height: 300px;
+  }
   .logo-mark {
     left: 5%;
   }
@@ -488,9 +498,12 @@ input[type]:focus {
 /* 極小デバイス（縦向きモバイル, 576px 未満）
 	============================================== */
 @media screen and (max-width: 575.98px) {
+  .about-img{
+    width: 100%;
+    max-height: 300px;
+  }
 
-  .display-3,
-  .display-4 {
+  .display {
     font-size: 2rem;
   }
 
