@@ -1,7 +1,17 @@
-<%= link_to seat_path(seat, seat: {is_used: !seat.is_used}),class: "absolute_tenpo#{seat.number}", method: :put, remote: true do %>
+<% if admin_signed_in? %>
+  <%= link_to seat_path(seat, seat: {is_used: !seat.is_used}),class: "absolute_tenpo#{seat.number}", method: :put, remote: true do %>
+    <% if seat.is_used %>
+      <i class="fas fa-user-slash"></i>
+    <% else %>
+      <i class="fas fa-user"></i>
+    <% end %>
+  <% end %>
+<% else %>
+  <span class="absolute_tenpo<%= seat.number %>">
   <% if seat.is_used %>
     <i class="fas fa-user-slash"></i>
   <% else %>
     <i class="fas fa-user"></i>
   <% end %>
+  </span>
 <% end %>
