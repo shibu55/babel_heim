@@ -14,8 +14,7 @@
 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ */
 body {
   color: #a9a9a9;
-  font-family: 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro', 'メイリオ', 'Meiryo',
-    'Noto Sans Japanese', Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+  font-family: "HG丸ｺﾞｼｯｸM-PRO","HGMaruGothicMPRO", "ヒラギノ丸ゴ Pro W4","ヒラギノ丸ゴ Pro","Hiragino Maru Gothic Pro";
   font-size: 16px;
   line-height: 1.6;
 }
@@ -137,9 +136,14 @@ header {
   background-color: #a9a9a9;
 }
 
+.category {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .about-img{
-  width: 100%;
   max-height: 300px;
+  object-fit: contain;
 }
 
 // .zigzag::before,
@@ -246,12 +250,11 @@ iframe {
 
 /* トップ画像 */
 .top-image {
-  // background-image: image-url("main.jpg");
   background: url("babel-logo.jpg") no-repeat center top;;
   background-size: contain;
   background-position: center;
   width: 100%;
-  height: calc(100vh - 100px);
+  height: calc(66vh - 100px);
   box-shadow: 0px 5px 6px 0px #e2e2e2;
   border-radius: 0;
   z-index: -1;
@@ -381,7 +384,7 @@ input[type]:focus {
 ============================================== */
 @media screen and (max-width: 991.98px) {
   .about-img{
-    width: 60%;
+    width: 100%;
     max-height: 300px;
   }
   .logo-mark {

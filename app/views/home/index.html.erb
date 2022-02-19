@@ -59,13 +59,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbar-header">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><%= link_to 'ABOUT', root_path(anchor: 'ABOUT'), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to 'CALENDAR', root_path(anchor: 'CALENDAR'), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to 'ATTENDING', root_path(anchor: 'ATTENDING'), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to 'ACCESS', root_path(anchor: 'ACCESS'), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to 'About', root_path(anchor: 'ABOUT'), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to 'Calendar', root_path(anchor: 'CALENDAR'), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to 'Attnding', root_path(anchor: 'ATTENDING'), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to 'Space', root_path(anchor: 'SPACE'), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to 'Access', root_path(anchor: 'ACCESS'), class: "nav-link" %></li>
         <% if admin_signed_in? %>
           <li>
-            <%= link_to "LOGOUT", destroy_admin_session_path, method: :delete, class: "nav-link" %>
+            <%= link_to "Logout", destroy_admin_session_path, method: :delete, class: "nav-link" %>
           </li>
         <% end %>
       </ul>
@@ -84,45 +85,23 @@
   </div>
 </div>
 
-<!-- 店内紹介 -->
-<div class="zigzag text-white py-5" id = "ABOUT">
-  <div class="container">
-
-    <h2 class="text-center display pb-3">About</h2>
-    <p class="text-center mx-auto mb-5 col-md-10">
-      石橋駅徒歩3分のシーシャカフェバー<br/>
-      Open:13:00〜23:00 定休日:木曜日、不定休 喫煙可です<br/>
-      カフェやバーのみのご利用もお待ちしています♪
-    </p>
-  </div>
-  <div class="container-fluid">
-   <div class="row py-5">
-      <div class="col-12 col-lg-5 order-md-2 p-lg-0 mb-3">
-        <%= image_tag "shisha2.jpg", class: "about-img" %>
-      </div>
-      <div class="col-12 col-lg-5 order-md-1 ml-md-auto">
-        <h3 class="mb-3 h2">シーシャ</h3>
-        <p>
-          おまかせセットは1400円から吸えます。
-          シーシャのフレイバーは30種類以上の中から好きなものを選んでいただくことも可能です。
-        </p>
-      </div>
+<!-- 混雑状況 -->
+<div class="zigzag text-white py-5" id="ATTENDING">
+  <div class="py-5">
+    <div class="container">
+      <h2 class="text-center display pb-3">Attending</h2>
+      <p class="text-center mx-auto mb-5 col-md-10">
+      店舗の座席情報がリアルタイムで反映されます。<br>
+      青色のマークの座席が現在ご利用いただけます。<br>
+      赤色のマークの座席は現在使用中です。
+      </p>
     </div>
-    <div class="row py-5">
-      <div class="col-12 col-lg-5 order-1 p-lg-0 mb-3">
-        <%= image_tag "prohibits.jpg", class: "about-img" %>
-      </div>
-      <div class="col-12 col-lg-5 order-2 mr-md-auto">
-        <h3 class="mb-3 h2">食べ物持ち込みOK！</h3>
-        <p>
-          皆様がシーシャの香りを楽しんでいただけるよう、<br/>
-          匂いの強い食べ物はご遠慮ください。<br/>
-          カフェバーなので飲み物のお持ち込みはご遠慮ください。
-
-        </p>
-      </div>
+    <div class="relative_tenpo">
+      <%= image_tag "floor.png", class: "tenpo-image" %>
+      <% @seats.first(10).each do |seat| %>
+        <%= render partial: 'seats/seat', locals: { seat: seat} %>
+      <% end %>
     </div>
-
   </div>
 </div>
 
@@ -131,6 +110,10 @@
 <div class="py-5" id="CALENDAR">
   <div class="py-5">
   <h2 class="text-center display pb-3">Calendar</h2>
+  <p class="text-center mx-auto mb-5 col-md-10">
+      今月の休業日情報です。<br>
+      毎週木曜日は定休日です。
+  </p>
     <div class="container">
       <% if admin_signed_in? %>
         <%= link_to '休日追加', new_holiday_path %>
@@ -147,37 +130,66 @@
   </div>
 </div>
 
-<!-- 混雑状況 -->
-<div class="zigzag text-white py-5" id="ATTENDING">
-  <div class="py-5">
-    <div class="container">
-      <h2 class="text-center display pb-3">ATTENDING</h2>
-      <p class="text-center mx-auto mb-5 col-md-10">
-      店舗の座席情報がリアルタイムで反映されます。<br>
-      青色のマークの座席が現在ご利用いただけます。<br>
-      赤色のマークの座席は現在使用中です。
-      </p>
-    </div>
-    <div class="relative_tenpo">
-      <%= image_tag "floor.png", class: "tenpo-image" %>
-      <% @seats.first(10).each do |seat| %>
-        <%= render partial: 'seats/seat', locals: { seat: seat} %>
-      <% end %>
-    </div>
-  </div>
-</div>
-
-<div class="py-5" id = "SPACE">
+<!-- 店内紹介 -->
+<div class="zigzag text-white py-5" id = "ABOUT">
+<div class="category">
   <div class="container">
 
-    <h2 class="text-center display pb-3">SPACE</h2>
+    <h2 class="text-center display pb-3">About</h2>
+    <p class="text-center mx-auto mb-5 col-md-10">
+      石橋駅徒歩3分のシーシャカフェバー<br/>
+      Open:13:00〜23:00 定休日:木曜日、不定休 喫煙可です<br/>
+      カフェやバーのみのご利用もお待ちしています♪
+    </p>
+  </div>
+  <div class="container-fluid">
+   <div class="row py-5">
+      <div class="text-sm-right col-12 col-sm-6 order-sm-2 p-lg-0 mb-3">
+        <%= image_tag "shisha2.jpg", class: "about-img" %>
+      </div>
+      <div class="col-12 col-sm-6 order-sm-1 ml-md-auto">
+        <h3 class="mb-3 h2">シーシャ</h3>
+        <p>
+          おまかせセットは1400円から吸えます。
+          シーシャのフレイバーは30種類以上の中から好きなものを選んでいただくことも可能です。
+        </p>
+      </div>
+    </div>
+    <div class="row py-5">
+      <div class="text-sm-left col-12 col-sm-6 order-1 p-lg-0 mb-3">
+        <%= image_tag "prohibits.jpg", class: "about-img" %>
+      </div>
+      <div class="col-12 col-sm-6 order-2 mr-md-auto">
+        <h3 class="mb-3 h2">食べ物持ち込みOK！</h3>
+        <p>
+          皆様がシーシャの香りを楽しんでいただけるよう、<br/>
+          匂いの強い食べ物はご遠慮ください。<br/>
+          カフェバーなので飲み物のお持ち込みはご遠慮ください。
+
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+
+
+
+
+<div class="py-5" id = "SPACE">
+<div class="category">
+  <div class="container">
+
+    <h2 class="text-center display pb-3">Space</h2>
   </div>
   <div class="container-fluid">
     <div class="row py-5">
-      <div class="col-12 col-lg-5 order-md-2 p-lg-0 mb-3">
+      <div class="text-sm-right col-12 col-sm-6 order-sm-2 p-lg-0 mb-3">
         <%= image_tag "open-seat.jpg", class: "about-img" %>
       </div>
-      <div class="col-12 col-lg-5 order-md-1 ml-md-auto">
+      <div class="col-12 col-sm-6 order-sm-1 ml-md-auto">
         <h3 class="mb-3 h2">カウンター</h3>
         <p>
           カウンター席は4席あります。感染症対策で席ごとに仕切りを設けています。カウンター席は4席あります。感染症対策で席ごとに仕切りを設けています。カウンター席は4席あります。感染症対策で席ごとに仕切りを設けています。カウンター席は4席あります。感染症対策で席ごとに仕切りを設けています。カウンター席は4席あります。感染症対策で席ごとに仕切りを設けています。カウンター席は4席あります。感染症対策で席ごとに仕切りを設けています。カウンター席は4席あります。感染症対策で席ごとに仕切りを設けています。カウンター席は4席あります。感染症対策で席ごとに仕切りを設けています。カウンター席は4席あります。感染症対策で席ごとに仕切りを設けています。
@@ -186,10 +198,10 @@
     </div>
 
     <div class="row py-5">
-      <div class="col-12 col-lg-5 order-1 p-lg-0 mb-3">
+      <div class="text-sm-left col-12 col-sm-6 order-1 p-lg-0 mb-3">
         <%= image_tag "sofa-seat.jpg", class: "about-img" %>
       </div>
-      <div class="col-12 col-lg-5 order-2 mr-md-auto">
+      <div class="col-12 col-sm-6 order-2 mr-md-auto">
         <h3 class="mb-3 h2">ソファ</h3>
         <p>
           ゆったりとリラックスしながらシーシャが吸えます。ゆったりとリラックスしながらシーシャが吸えます。ゆったりとリラックスしながらシーシャが吸えます。ゆったりとリラックスしながらシーシャが吸えます。ゆったりとリラックスしながらシーシャが吸えます。ゆったりとリラックスしながらシーシャが吸えます。ゆったりとリラックスしながらシーシャが吸えます。ゆったりとリラックスしながらシーシャが吸えます。ゆったりとリラックスしながらシーシャが吸えます。ゆったりとリラックスしながらシーシャが吸えます。ゆったりとリラックスしながらシーシャが吸えます。ゆったりとリラックスしながらシーシャが吸えます。
@@ -198,10 +210,10 @@
     </div>
 
     <div class="row py-5">
-      <div class="col-12 col-lg-5 order-md-2 p-lg-0 mb-3">
+      <div class="text-sm-right col-12 col-sm-6 order-sm-2 p-lg-0 mb-3">
         <%= image_tag "pair-seat.jpg", class: "about-img" %>
       </div>
-      <div class="col-12 col-lg-5 order-md-1 ml-md-auto">
+      <div class="text-sm-left col-12 col-sm-6 order-sm-1 ml-md-auto">
         <h3 class="mb-3 h2">フラット</h3>
         <p>
           フラット席ではご友人と一緒にシーシャを楽しむ場合におすすめです。フラット席ではご友人と一緒にシーシャを楽しむ場合におすすめです。フラット席ではご友人と一緒にシーシャを楽しむ場合におすすめです。フラット席ではご友人と一緒にシーシャを楽しむ場合におすすめです。フラット席ではご友人と一緒にシーシャを楽しむ場合におすすめです。フラット席ではご友人と一緒にシーシャを楽しむ場合におすすめです。フラット席ではご友人と一緒にシーシャを楽しむ場合におすすめです。フラット席ではご友人と一緒にシーシャを楽しむ場合におすすめです。フラット席ではご友人と一緒にシーシャを楽しむ場合におすすめです。フラット席ではご友人と一緒にシーシャを楽しむ場合におすすめです。
@@ -211,18 +223,19 @@
 
   </div>
 </div>
+</div>
 
 
 <!-- アクセス -->
 <div class="zigzag text-white access pt-5" id = "ACCESS">
   <div class="container text-center">
-    <h2 class="display pb-3">ACCESS</h2>
+    <h2 class="display pb-3">Access</h2>
     <div class="mb-3 text-center">
       <p class="mb-0">アクセス：阪急宝塚線「石橋阪大前」下車&ensp;<br class="d-block d-md-none">西改札口&ensp;徒歩3分</p>
     </div>
   </div>
   <!-- 地図 -->
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d818.9907352385914!2d135.44228952921463!3d34.80687419993082!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000f1bd9818e8cd%3A0x35d354d0976bd0de!2zQmFiZWwgSGVpbSAo44OQ44OZ44Or44OP44Kk44OgKQ!5e0!3m2!1sja!2sjp!4v1644729750025!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d818.9907461688142!2d135.4428367!3d34.8068731!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000f084e2143783%3A0xb685cbfe22e015ac!2z44CSNTYzLTAwMzIg5aSn6Ziq5bqc5rGg55Sw5biC55-z5qmL77yR5LiB55uu77yS77yT4oiS77yS!5e0!3m2!1sja!2sjp!4v1645263067011!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 </div>
 
 <!-- 下部コンテンツ -->
@@ -236,12 +249,12 @@
             <p class="text-center h4 mb-4"><a href="#" class="text-white">https://babelheim.com/</a></p>
             <hr class="bg-white my-lg-4">
             <address class="h5 font-weight-bold">
-              <p>店舗名：Babel Heim</p>
-              <p>住所：大阪府池田市石橋１-２３−２</p>
+              <p>店舗名:Babel Heim</p>
+              <p>住所:大阪府池田市石橋1-23-2</p>
             </address>
             <hr class="bg-white my-lg-4">
             <div class="h4 font-weight-bold">
-              <p>OPEN 13:00 - CLOSE 21:00 (LO.20:30)</p>
+              <p>OPEN 13:00 - CLOSE 23:00 (LO.22:00)</p>
             </div>
           </div>
         </div>
