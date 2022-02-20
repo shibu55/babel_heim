@@ -23,7 +23,6 @@ class HolidaysController < ApplicationController
   end
 
   def update
-    binding.pry
     @holiday = Holiday.find(params[:id])
     if @holiday.update(holiday_parameter)
       redirect_to new_holiday_path
