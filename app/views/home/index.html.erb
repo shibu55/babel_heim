@@ -87,6 +87,7 @@
 <!-- 混雑状況 -->
 <div class="zigzag text-white py-5" id="ATTENDING">
   <div class="py-5">
+      <% if @is_open %>
     <div class="container">
       <h2 class="text-center display pb-3">Attending</h2>
       <p class="text-center mx-auto mb-5 col-md-10">
@@ -94,13 +95,26 @@
       青色のマークの座席が現在ご利用いただけます。<br>
       赤色のマークの座席は現在使用中です。
       </p>
+    <% if admin_signed_in? %>
+      <%= link_to "開始", all_seats_path, :method => :put, class: "btn btn-primary" %>
+    <% end %>
     </div>
     <div class="relative_tenpo">
-      <%= image_tag "floor.png", class: "tenpo-image" %>
-      <% @seats.first(10).each do |seat| %>
+      <%= image_tag "floor_5.png", class: "tenpo-image" %>
+      <% @seats.first(11).each do |seat| %>
         <%= render partial: 'seats/seat', locals: { seat: seat} %>
       <% end %>
     </div>
+      <% else %>
+        <div class="container">
+      <h2 class="text-center display pb-3">Attending</h2>
+      <p class="text-center mx-auto mb-5 col-md-10">
+        本日は休業日です。<br>
+        最新の営業日情報はCalendarをご確認ください。<br>
+        営業日には店舗の座席情報がリアルタイムで反映されます。<br>
+      </p>
+    </div>
+      <% end %>
   </div>
 </div>
 

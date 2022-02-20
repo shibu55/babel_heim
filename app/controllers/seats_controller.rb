@@ -6,6 +6,11 @@ class SeatsController < ApplicationController
     @seat.update(seat_params)
   end
 
+  def update_all
+    Seat.find_each {|seat| seat.update!(is_used: false)}
+    redirect_back(fallback_location: root_path)
+  end
+
   private
     def seat_params
       params.require(:seat).permit(:is_used)
