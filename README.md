@@ -1,24 +1,16 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+トップページ
+https://babelheim.com/
+サインイン画面
+https://babelheim.com/admins/sign_in
+email: ****
+password: ****
+サインインした後はトップページが管理者仕様となります。
+ナビゲーションメニューのログアウトボタンからログアウトができます。
+Calendar
+休日追加から遷移するページ（https://babelheim.com/holidays/new）でスタートタイムに日付を入れていただければお店の定休日を設定可能です。
+一般のユーザーからは当月の休日情報しか見れません。
+Attending
+管理者としてログインしている状態の時のみアイコンをクリックするとアイコンの使用状況を切り替えできます。
+閉業時間になると自動で座席は全てクローズとなります。
+開店時には開始ボタンをクリックすると全ての座席情報がオープン状態になります。
+休業日には座席情報は表示されません。
