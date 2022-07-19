@@ -101,7 +101,7 @@
     </div>
     <div class="relative_tenpo">
       <%= image_tag "floor_5.png", class: "tenpo-image" %>
-      <% @seats.first(11).each do |seat| %>
+      <% @seats.first(10).each do |seat| %>
         <%= render partial: 'seats/seat', locals: { seat: seat} %>
       <% end %>
     </div>
@@ -246,7 +246,7 @@
             </address>
             <hr class="bg-white my-lg-4">
             <div class="h4 font-weight-bold">
-              <p>OPEN 13:00 - CLOSE 23:00 (LO.22:00)</p>
+              <p>OPEN 13:00 - CLOSE 23:00 (シーシャLO.21:30)</p>
             </div>
           </div>
         </div>
