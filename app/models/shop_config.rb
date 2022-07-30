@@ -1,0 +1,2 @@
+class ShopConfig < ApplicationRecord
+end

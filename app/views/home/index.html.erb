@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <title>BabelHeim</title>
 <meta name="description" content="石橋駅徒歩3分のシーシャカフェバー
-      Open:13:00〜23:00 定休日:木曜日、不定休 喫煙可です
+      Open:<%= @shop_config.open_hour %>〜<%= @shop_config.close_hour %> 定休日:木曜日、不定休 喫煙可です
       カフェやバーのみのご利用もお待ちしています">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="canonical" href="https://babelheim.com">
@@ -15,7 +15,7 @@
 <meta property="og:image" content="assets/logo.png" />
 <meta property="og:title" content="BabelHeim" />
 <meta property="og:description" content="石橋駅徒歩3分のシーシャカフェバー
-      Open:13:00〜23:00 定休日:木曜日、不定休 喫煙可です
+      Open:<%= @shop_config.open_hour %>〜<%= @shop_config.close_hour %> 定休日:木曜日、不定休 喫煙可です
       カフェやバーのみのご利用もお待ちしています" />
 <meta property="og:site_name" content="BabelHeim" />
 <!-- Facebook用設定 -->
@@ -151,7 +151,7 @@
     <h2 class="text-center display pb-3">About</h2>
     <p class="text-center mx-auto mb-5 col-md-10">
       石橋駅徒歩3分のシーシャカフェバー<br/>
-      Open:13:00〜23:00<br/>
+      Open:<%= @shop_config.open_hour %>〜<%= @shop_config.close_hour %><br/>
       定休日:木曜日、不定休<br/>
       喫煙可、チャージなし<br/>
       カフェやバーのみのご利用もお待ちしています。
@@ -217,6 +217,42 @@
   </div>
 </div>
 
+<!-- お知らせ -->
+<% if @shop_config.is_show_news? || admin_signed_in? %>
+  <div class="zigzag text-white py-5" id="NEWS">
+    <% if admin_signed_in? %>
+      <%= link_to 'Newsの表示状態を変更する', update_is_show_news_path %>
+      <p>現在の状態：
+      <% if @shop_config.is_show_news? %>
+        表示中
+      <% else %>
+        非表示中
+      <% end %>
+      </p>
+    <% end %>
+
+    <div class="category">
+      <div class="container">
+        <h2 class="text-center display pb-3">NEWS</h2>
+      </div>
+      <div>
+      
+        <div class="row">
+          <% @news.each do |new| %>
+            <div class="col-12 col-sm-6 mb-3">
+              <%= image_tag "babel_logo.jpg", class: "news-img" %>
+              <h3 class="h3"><%= new.title %></h3>
+              <p class="h4"><%= new.content %></p>
+              <p class="mb-3 h4"><%= new.created_at.strftime('%Y/%m/%d') %></p>
+            </div>
+          <% end %>
+        </div>
+        <%= link_to "もっとみる", news_index_path %>
+
+      </div>
+    </div>
+  </div>
+<% end %>
 
 <!-- アクセス -->
 <div class="zigzag text-white access pt-5" id = "ACCESS">
@@ -246,7 +282,7 @@
             </address>
             <hr class="bg-white my-lg-4">
             <div class="h4 font-weight-bold">
-              <p>OPEN 13:00 - CLOSE 23:00 (シーシャLO.21:30)</p>
+              <p>OPEN <%= @shop_config.open_hour %> - CLOSE <%= @shop_config.close_hour %> (シーシャLO.<%= @shop_config.last_order_hour %>)</p>
             </div>
           </div>
         </div>
@@ -256,7 +292,7 @@
 </div>
 <!-- フッター -->
 <footer class="py-3 m-0 zigzag-copy">
-  <p class="text-center mb-0"><small class="text-white">2021-2022 &copy; BabelHeim All Right Reserved.</small></p>
+  <p class="text-center mb-0"><small class="text-white">&copy; BabelHeim All Right Reserved.</small></p>
 </footer>
 
 <!-- javascript はここから -->

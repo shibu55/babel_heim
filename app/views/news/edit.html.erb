@@ -1,0 +1,17 @@
+<%= form_with(model: @news, local: true) do |form| %>
+
+  <div class="title">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="content">
+    <%= form.label :content %>
+    <%= form.text_area :content %>
+  </div>
+
+  <div class="submit">
+    <%= form.submit %>
+  </div>
+
+<% end %>

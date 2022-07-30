@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  open_hour: MyString
+  close_hour: MyString
+  is_show_news: false
+
+two:
+  open_hour: MyString
+  close_hour: MyString
+  is_show_news: false
