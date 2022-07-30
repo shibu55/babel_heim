@@ -85,6 +85,9 @@
 </div>
 
 <!-- 混雑状況 -->
+<% if admin_signed_in? %>
+  <%= link_to "営業時間の編集", edit_hour_path %>
+<% end %>
 <div class="zigzag text-white py-5" id="ATTENDING">
   <div class="py-5">
       <% if @is_open %>
@@ -263,7 +266,8 @@
     </div>
   </div>
   <!-- 地図 -->
-  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d818.9907461688142!2d135.4428367!3d34.8068731!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000f084e2143783%3A0xb685cbfe22e015ac!2z44CSNTYzLTAwMzIg5aSn6Ziq5bqc5rGg55Sw5biC55-z5qmL77yR5LiB55uu77yS77yT4oiS77yS!5e0!3m2!1sja!2sjp!4v1645263067011!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3275.958986723292!2d135.4406222152352!3d34.80697368040731!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000f16d91f89ee3%3A0x44a9bf017518399d!2sbabelheim!5e0!3m2!1sja!2sjp!4v1659173127943!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
 </div>
 
 <!-- 下部コンテンツ -->

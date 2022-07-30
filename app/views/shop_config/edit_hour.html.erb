@@ -1,0 +1,22 @@
+<%= form_with(model: @shop_config, url: update_hour_path, local: true) do |form| %>
+
+  <div class="open_hour">
+    <%= form.label :open_hour %>
+    <%= form.text_field :open_hour %>
+  </div>
+
+  <div class="close_hour">
+    <%= form.label :close_hour %>
+    <%= form.text_area :close_hour %>
+  </div>
+
+  <div class="last_order_hour">
+    <%= form.label :last_order_hour %>
+    <%= form.text_area :last_order_hour %>
+  </div>
+
+  <div class="submit">
+    <%= form.submit %>
+  </div>
+
+<% end %>
