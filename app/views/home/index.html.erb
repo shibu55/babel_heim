@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <title>BabelHeim</title>
 <meta name="description" content="石橋駅徒歩3分のシーシャカフェバー
-      Open:<%= @shop_config.open_hour %>〜<%= @shop_config.close_hour %> 定休日:木曜日、不定休 喫煙可です
+      Open:<%= @shop_config.open_hour %>〜<%= @shop_config.close_hour %> 定休日:不定休 喫煙可です
       カフェやバーのみのご利用もお待ちしています">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="canonical" href="https://babelheim.com">
@@ -15,7 +15,7 @@
 <meta property="og:image" content="assets/logo.png" />
 <meta property="og:title" content="BabelHeim" />
 <meta property="og:description" content="石橋駅徒歩3分のシーシャカフェバー
-      Open:<%= @shop_config.open_hour %>〜<%= @shop_config.close_hour %> 定休日:木曜日、不定休 喫煙可です
+      Open:<%= @shop_config.open_hour %>〜<%= @shop_config.close_hour %> 定休日:不定休 喫煙可です
       カフェやバーのみのご利用もお待ちしています" />
 <meta property="og:site_name" content="BabelHeim" />
 <!-- Facebook用設定 -->
@@ -128,7 +128,7 @@
   <h2 class="text-center display pb-3">Calendar</h2>
   <p class="text-center mx-auto mb-5 col-md-10">
       今月の休業日情報です。<br>
-      毎週木曜日は定休日です。
+      定休日：不定休
   </p>
     <div class="container">
       <% if admin_signed_in? %>
@@ -155,7 +155,7 @@
     <p class="text-center mx-auto mb-5 col-md-10">
       石橋駅徒歩3分のシーシャカフェバー<br/>
       Open:<%= @shop_config.open_hour %>〜<%= @shop_config.close_hour %><br/>
-      定休日:木曜日、不定休<br/>
+      定休日:不定休<br/>
       喫煙可、チャージなし<br/>
       カフェやバーのみのご利用もお待ちしています。
     </p>

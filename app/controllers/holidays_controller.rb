@@ -24,7 +24,7 @@ class HolidaysController < ApplicationController
       target_day = first.next_occurring(wdays[wday])
     end
     while target_day.month == wmonth do
-      Holiday.create({title: "定休日", start_time: target_day})
+      Holiday.create({title: "店休日", start_time: target_day})
       target_day = target_day.next_occurring(wdays[wday])
     end
 
