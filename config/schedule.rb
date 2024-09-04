@@ -19,7 +19,7 @@ set :environment, rails_env
 set :output, "#{Rails.root}/log/cron.log"
 
 # 一時間毎に実行
-every 1.day, :at => '11:00 pm' do
+every 1.day, :at => '11:17 pm' do
   rake 'seats_reset:open'
 end
 
