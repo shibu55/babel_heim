@@ -1,0 +1,27 @@
+<div class="container mt-4">
+  <h1>スタッフ編集</h1>
+  
+  <%= form_with model: @staff, local: true do |form| %>
+    <% if @staff.errors.any? %>
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          <% @staff.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <div class="mb-3">
+      <%= form.label :name, '名前', class: 'form-label' %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+    
+    
+    
+    <div class="mb-3">
+      <%= form.submit '更新', class: 'btn btn-primary' %>
+      <%= link_to 'キャンセル', staffs_path, class: 'btn btn-secondary' %>
+    </div>
+  <% end %>
+</div>

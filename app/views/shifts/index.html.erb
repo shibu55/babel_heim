@@ -1,0 +1,67 @@
+<div class="container mt-4">
+  <h1>シフト管理</h1>
+  
+  <div class="mb-3">
+    <%= link_to 'ホームに戻る', root_path, class: 'btn btn-secondary' %>
+    <%= link_to 'スタッフ管理', staffs_path, class: 'btn btn-secondary' %>
+  </div>
+  
+  <%= form_with(model: @shift || Shift.new, local: true) do |form| %>
+  <h4>シフトの登録</h4>
+    <% if @shift&.errors&.any? %>
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          <% @shift.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="row">
+      <div class="col-md-4">
+        <%= form.label :staff_id, 'スタッフ', class: 'form-label' %>
+        <%= form.select :staff_id, options_from_collection_for_select(@staffs, :id, :name), 
+                        { prompt: '選択してください' }, 
+                        class: 'form-control' %>
+      </div>
+      
+      <div class="col-md-4">
+        <%= form.label :start_time, '出勤日', class: 'form-label' %>
+        <%= form.date_field :start_time, class: 'form-control' %>
+      </div>
+      
+      <div class="col-md-4">
+        <label class="form-label">&nbsp;</label>
+        <div>
+          <%= form.submit '追加する', class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <div class="mt-5">
+    <h2>カレンダー</h2>
+    <%= month_calendar events: @holidays do |date, holidays| %>
+      <%= date.day %>
+      
+      <% shifts_for_date = @shifts.select { |shift| shift.start_time.to_date == date } %>
+      
+      <% if holidays.any? %>
+        <div class="holiday-notice small">休業日</div>
+      <% end %>
+      
+      <% shifts_for_date.each do |shift| %>
+        <div>
+          <p class="mb-0">
+            <span class="staff-name small"><%= shift.staff.name %></span>
+          </p>
+          <p class="mb-0 small">
+            <%= link_to 'Edit', edit_shift_path(shift) %>
+            <%= link_to 'Destroy', shift_path(shift), method: :delete, 
+                        data: { confirm: 'Are you sure?' } %>
+          </p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

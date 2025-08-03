@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <h1>シフト編集</h1>
+  
+  <%= form_with model: @shift, local: true do |form| %>
+    <% if @shift.errors.any? %>
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          <% @shift.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <div class="mb-3">
+      <%= form.label :staff_id, 'スタッフ', class: 'form-label' %>
+      <%= form.select :staff_id, options_from_collection_for_select(@staffs, :id, :name, @shift.staff_id), 
+                      { prompt: '選択してください' }, 
+                      class: 'form-control' %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :start_time, '出勤日', class: 'form-label' %>
+      <%= form.date_field :start_time, class: 'form-control' %>
+    </div>
+    
+    
+    <div class="mb-3">
+      <%= form.submit '更新', class: 'btn btn-primary' %>
+      <%= link_to 'キャンセル', shifts_path, class: 'btn btn-secondary' %>
+    </div>
+  <% end %>
+</div>

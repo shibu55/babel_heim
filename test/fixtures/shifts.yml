@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  staff: one
+  start_time: 2025-08-03 11:17:10
+
+two:
+  staff: two
+  start_time: 2025-08-03 11:17:10

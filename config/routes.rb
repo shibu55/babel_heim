@@ -3,9 +3,13 @@ Rails.application.routes.draw do
   devise_for :admins, controllers: {
     sessions: 'admins/sessions'
   }
+
   resources :seats, only: [:index, :create, :update]
   resources :news
   resources :holidays
+  resources :staffs
+  resources :shifts
+  
   put 'all_seats', to: 'seats#update_all', as: 'all_seats'
   post 'regular', to: 'holidays#create_regular_holidays', as: 'regular_holidays'
   get 'update_is_show_news', to: 'news#update_is_show_news', as: 'update_is_show_news'

@@ -139,14 +139,18 @@
   </p>
     <div class="container">
       <% if admin_signed_in? %>
-        <%= link_to '休日追加', new_holiday_path %>
+        <div class="mb-3">
+          <%= link_to '休日設定', new_holiday_path, class: 'btn btn-primary me-2' %>
+          <%= link_to 'シフト管理', shifts_path, class: 'btn btn-secondary' %>
+        </div>
       <% end %>
       <%= month_calendar events: @holidays do |date, holidays| %>
         <%= date.day %>
         <% holidays.each do |holiday| %>
-        <div>
-          <%= holiday.title %>
-        </div>
+          <div><%= holiday.title %></div>
+        <% end %>
+        <% @shifts.select { |s| s.start_time.to_date == date }.each do |shift| %>
+          <div><%= shift.staff.name %></div>
         <% end %>
       <% end %>
     </div>

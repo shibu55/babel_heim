@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_30_075827) do
+ActiveRecord::Schema.define(version: 2025_08_03_023606) do
 
   create_table "admins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "email", limit: 255, default: "", null: false
-    t.string "encrypted_password", limit: 255, default: "", null: false
-    t.string "reset_password_token", limit: 255
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2022_07_30_075827) do
   end
 
   create_table "holidays", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "title", limit: 255
+    t.string "title"
     t.text "content"
     t.datetime "start_time"
     t.datetime "created_at", precision: 6, null: false
@@ -46,6 +46,15 @@ ActiveRecord::Schema.define(version: 2022_07_30_075827) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "shifts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "staff_id", null: false
+    t.datetime "start_time", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["staff_id"], name: "index_shifts_on_staff_id"
+    t.index ["start_time"], name: "index_shifts_on_start_time"
+  end
+
   create_table "shop_configs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "open_hour"
     t.string "close_hour"
@@ -55,4 +64,11 @@ ActiveRecord::Schema.define(version: 2022_07_30_075827) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "staffs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "shifts", "staffs"
 end
