@@ -1,0 +1,36 @@
+<footer class="bh-footer">
+  <%= render "shared/site_sns" %>
+  <p><small>&copy; BabelHeim All Rights Reserved.</small></p>
+</footer>
+
+<!-- javascript はここから -->
+<%# Turbolinks で戻ってくるたびに body 内の script が再実行され、Bootstrap のハンドラが二重登録されて
+    ハンバーガーメニューが閉じなくなるので、まだ読み込まれていないときだけ読み込む %>
+<script>
+  (function () {
+    if (window.bhScriptsLoaded) return;
+    window.bhScriptsLoaded = true;
+
+    [
+      ["https://code.jquery.com/jquery-3.4.1.min.js", "sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="],
+      ["https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js", "sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"],
+      ["https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js", "sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"]
+    ].forEach(function (src) {
+      var s = document.createElement("script");
+      s.src = src[0];
+      s.integrity = src[1];
+      s.crossOrigin = "anonymous";
+      s.async = false; // 追加順に実行する
+      document.head.appendChild(s);
+    });
+
+    // メニュー内のリンクを押したらメニューを閉じる
+    document.addEventListener("click", function (e) {
+      var link = e.target.closest && e.target.closest("#navbar-header a");
+      var menu = document.getElementById("navbar-header");
+      if (link && menu && menu.classList.contains("show") && window.jQuery) {
+        window.jQuery(menu).collapse("hide");
+      }
+    });
+  })();
+</script>

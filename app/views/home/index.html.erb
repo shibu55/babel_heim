@@ -18,304 +18,199 @@
       Open:<%= @shop_config.open_hour %>〜<%= @shop_config.close_hour %> 定休日:不定休 喫煙可です
       カフェやバーのみのご利用もお待ちしています" />
 <meta property="og:site_name" content="BabelHeim" />
-<!-- Facebook用設定 -->
-<%# <meta property="fb:app_id" content="facebookのApp ID" />
-<meta property="article:publisher" content="FacebookページのURL"> %>
-<!-- Twitter用設定 -->
-<%# <meta name="twitter:card" content="Twitterカードの種類">
-<meta name="twitter:site" content="@ユーザー名"> %>
-<!-- スタイルシートはここから -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-<link rel="stylesheet" href="assets/style.css?body=1">
-<link href="https://fonts.googleapis.com/css?family=Comfortaa:500" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/css/modaal.min.css">
+<%= render "shared/site_assets" %>
 </head>
 
 <body>
-<header class="container-fluid mb-3 mb-md-0">
-  <!-- 営業時間 -->
-  <div class="d-md-flex justify-content-between">
-    <%# <div class="col-8 col-lg-3 d-none d-md-block top-stitch rounded-bottom">
-      <p class="mb-0">OPEN 13:00 - CLOSE 21:00 (LO.20:30)</p>
-    </div> %>
-    <%# ロゴで表示したい %>
-    <h1 class="top-logo">BabelHeim</h1>
-    <!-- SNSアイコン -->
-    <div class="mt-2 ml-auto float-right float-md-none">
-    <% if @is_open %>
-      <a href="#ATTENDING" class="modal-open" target="blank"><i class="fas fa-users fa-2x"></i>
-      </a>
-    <% end %>
-      <a href="#CALENDAR" class="modal-open" target="blank"><i class="fas fa-calendar fa-2x"></i>
-      </a>
-      <!-- Twitter -->
-      <a id="twitter" href="https://twitter.com/babel_heim" target="blank"><i class="fab fa-2x fa-twitter"></i>
-      </a>
-      <!-- Facebook -->
-      <a id="facebook" href="https://www.facebook.com/Babel-Heim-298530387734629/" target="blank"><i class="fab fa-2x fa-facebook-square"></i>
-      </a>
-      <!-- instagram -->
-      <a id="instagram" href="https://instagram.com/babelheim" target="blank"><i class="fab fa-2x fa-instagram"></i></a>
+<div class="bh">
+
+<%= render "shared/site_header" %>
+
+<!-- トップ -->
+<section class="bh-hero" id="TOP">
+  <div class="container">
+    <%= image_tag "babel-logo.jpg", alt: "Babel Heim shisha cafe and bar", class: "bh-hero__logo" %>
+    <p class="bh-hero__lead">石橋阪大前駅 徒歩3分のシーシャカフェバー</p>
+    <div class="bh-hero__status">
+      <% if @is_open %>
+        <span class="bh-badge bh-badge--open">本日営業</span>
+        <span><%= @shop_config.open_hour %> – <%= @shop_config.close_hour %></span>
+      <% else %>
+        <span class="bh-badge bh-badge--closed">本日休業</span>
+        <span>営業日はカレンダーをご確認ください</span>
+      <% end %>
+    </div>
+    <div class="bh-hero__actions">
+      <a href="#ATTENDING" class="bh-btn bh-btn--primary">空席を見る</a>
+      <a href="#ACCESS" class="bh-btn bh-btn--ghost">アクセス</a>
     </div>
   </div>
-  <nav class="navbar navbar-expand-md navbar-light bg-white pr-0">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbar-header" aria-expanded="false" aria-label="ナビゲーションの切替">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbar-header">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><%= link_to 'About', root_path(anchor: 'ABOUT'), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to 'Calendar', root_path(anchor: 'CALENDAR'), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to 'Attnding', root_path(anchor: 'ATTENDING'), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to 'Space', root_path(anchor: 'SPACE'), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to 'Access', root_path(anchor: 'ACCESS'), class: "nav-link" %></li>
-        <% if admin_signed_in? %>
-          <li>
-            <%= link_to "Logout", destroy_admin_session_path, method: :delete, class: "nav-link" %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  </nav>
-</header>
-<!-- トップ画像 -->
-<div class="jumbotron-fluid position-relative top-image p-0">
-  <!-- トップ画像内文字 -->
-  <div class="text-white position-absolute main-txt">
-    <% if admin_signed_in? %>
-      <h1 style="color:red;">
-        管理者画面
-      </h1>
-    <% end %>
-  </div>
-</div>
+</section>
 
 <!-- 混雑状況 -->
-<% if admin_signed_in? %>
-  <%= link_to "営業時間の編集", edit_hour_path %>
-<% end %>
-<div class="zigzag text-white py-5" id="ATTENDING">
-  <div class="py-5">
-      <% if @is_open %>
-    <div class="container">
-      <h2 class="text-center display pb-3">Attending</h2>
-      <p class="text-center mx-auto mb-5 col-md-10">
-      店舗の座席情報がリアルタイムで反映されます。<br>
-      青色のマークの座席が現在ご利用いただけます。<br>
-      赤色のマークの座席は現在使用中です。
-      </p>
-    <% if admin_signed_in? %>
-      <%= link_to "開始", all_seats_path, :method => :put, class: "btn btn-primary" %>
-    <% end %>
-    </div>
-    <div class="relative_tenpo">
-      <%= image_tag "floor2024.png", class: "tenpo-image" %>
-      <% @seats.first(14).each do |seat| %>
-        <%= render partial: 'seats/seat', locals: { seat: seat} %>
+<section class="bh-section bh-section--dark" id="ATTENDING">
+  <div class="container">
+    <p class="bh-eyebrow">Seats</p>
+    <h2 class="bh-title">Attending</h2>
+    <% if @is_open %>
+      <p class="bh-text">店舗の座席情報がリアルタイムで反映されます。</p>
+      <ul class="bh-legend">
+        <li><i class="fas fa-user bh-legend__free"></i> 空席</li>
+        <li><i class="fas fa-user-slash bh-legend__used"></i> 使用中</li>
+      </ul>
+      <% if admin_signed_in? %>
+        <div class="text-center mb-4">
+          <%= link_to "開始（全席を空席にする）", all_seats_path, method: :put, class: "bh-btn bh-btn--primary" %>
+        </div>
       <% end %>
-    </div>
-      <% else %>
-        <div class="container">
-      <h2 class="text-center display pb-3">Attending</h2>
-      <p class="text-center mx-auto mb-5 col-md-10">
+      <div class="bh-floor">
+        <div class="relative_tenpo">
+          <%= image_tag "floor2024.png", class: "tenpo-image", alt: "店内の座席配置図" %>
+          <% @seats.first(14).each do |seat| %>
+            <%= render partial: 'seats/seat', locals: { seat: seat } %>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <p class="bh-text">
         本日は休業日です。<br>
         最新の営業日情報はCalendarをご確認ください。<br>
-        営業日には店舗の座席情報がリアルタイムで反映されます。<br>
+        営業日には店舗の座席情報がリアルタイムで反映されます。
       </p>
-    </div>
-      <% end %>
+    <% end %>
   </div>
-</div>
-
+</section>
 
 <!-- カレンダー -->
-<div class="py-5" id="CALENDAR">
-  <div class="py-5">
-  <h2 class="text-center display pb-3">Calendar</h2>
-  <p class="text-center mx-auto mb-5 col-md-10">
-      今月の休業日情報です。<br>
-      定休日：不定休
-  </p>
-    <div class="container">
-      <% if admin_signed_in? %>
-        <div class="mb-3">
-          <%= link_to '休日設定', new_holiday_path, class: 'btn btn-primary me-2' %>
-          <%= link_to 'シフト管理', shifts_path, class: 'btn btn-secondary' %>
-        </div>
-      <% end %>
+<section class="bh-section" id="CALENDAR">
+  <div class="container">
+    <p class="bh-eyebrow">Schedule</p>
+    <h2 class="bh-title">Calendar</h2>
+    <p class="bh-text">
+      今月の休業日情報です。<span class="bh-chip">定休日：不定休</span>
+    </p>
+    <div class="bh-card bh-calendar">
       <%= month_calendar events: @holidays do |date, holidays| %>
-        <%= date.day %>
+        <span class="bh-calendar__day"><%= date.day %></span>
         <% holidays.each do |holiday| %>
-          <div><%= holiday.title %></div>
+          <div class="bh-calendar__holiday"><%= holiday.title %></div>
         <% end %>
         <% @shifts.select { |s| s.start_time.to_date == date }.each do |shift| %>
-          <div><%= shift.staff.name %></div>
+          <div class="bh-calendar__staff"><%= shift.staff.name %></div>
         <% end %>
       <% end %>
     </div>
   </div>
-</div>
+</section>
 
 <!-- 店内紹介 -->
-<div class="zigzag text-white py-5" id = "ABOUT">
-<div class="category">
+<section class="bh-section bh-section--cream" id="ABOUT">
   <div class="container">
+    <p class="bh-eyebrow">About</p>
+    <h2 class="bh-title">About</h2>
+    <ul class="bh-facts">
+      <li><span>Open</span><%= @shop_config.open_hour %>〜<%= @shop_config.close_hour %></li>
+      <li><span>定休日</span>不定休</li>
+      <li><span>チャージ</span>なし</li>
+      <li><span>喫煙</span>可</li>
+    </ul>
+    <p class="bh-text">カフェやバーのみのご利用もお待ちしています。</p>
 
-    <h2 class="text-center display pb-3">About</h2>
-    <p class="text-center mx-auto mb-5 col-md-10">
-      石橋駅徒歩3分のシーシャカフェバー<br/>
-      Open:<%= @shop_config.open_hour %>〜<%= @shop_config.close_hour %><br/>
-      定休日:不定休<br/>
-      喫煙可、チャージなし<br/>
-      カフェやバーのみのご利用もお待ちしています。
-    </p>
-  </div>
-  <div class="container-fluid">
-   <div class="row py-5">
-      <div class="text-sm-right col-12 col-sm-6 order-sm-2 p-lg-0 mb-3">
-        <%= image_tag "shisha2.jpg", class: "about-img" %>
-      </div>
-      <div class="col-12 col-sm-6 order-sm-1 ml-md-auto">
-        <h3 class="mb-3 h2">シーシャ</h3>
-        <p>
-          シーシャ1本¥2100です。30種類以上のフレーバーを用意しております。<br/>
-          ご提供まで15〜30分のお時間を頂きます。
-        </p>
+    <div class="bh-feature">
+      <%= image_tag "shisha2.jpg", class: "bh-feature__img", alt: "シーシャ" %>
+      <div class="bh-feature__body">
+        <h3>シーシャ</h3>
+        <p class="bh-price">¥2,100 <small>/ 1本</small></p>
+        <p>30種類以上のフレーバーを用意しております。<br>ご提供まで15〜30分のお時間を頂きます。</p>
       </div>
     </div>
-    <div class="row py-5">
-      <div class="text-sm-left col-12 col-sm-6 order-1 p-lg-0 mb-3">
-        <%= image_tag "prohibits.jpg", class: "about-img" %>
+    <div class="bh-feature bh-feature--reverse">
+      <%= image_tag "prohibits.jpg", class: "bh-feature__img", alt: "持ち込みについて" %>
+      <div class="bh-feature__body">
+        <h3>食べ物持ち込みOK！</h3>
+        <p>皆様がシーシャの香りを楽しんでいただけるよう、匂いの強い食べ物はご遠慮ください。<br>また、カフェバーなので飲み物のお持ち込みはご遠慮ください。</p>
       </div>
-      <div class="col-12 col-sm-6 order-2 mr-md-auto">
-        <h3 class="mb-3 h2">食べ物持ち込みOK！</h3>
-        <p>
-          皆様がシーシャの香りを楽しんでいただけるよう匂いの強い食べ物はご遠慮ください。<br/>
-          また、カフェバーなので飲み物のお持ち込みはご遠慮ください。
-        </p>
-      </div>
-    </div>
-
-  </div>
-</div>
-</div>
-
-
-
-
-
-<div class="py-5" id = "SPACE">
-  <div class="category">
-    <div class="container">
-      <h2 class="text-center display pb-3">Space</h2>
-    </div>
-    <div>
-    
-      <div class="row">
-        <div class="col-12 col-sm-4 mb-3">
-          <%= image_tag "open-seat.jpg", class: "about-img" %>
-          <h3 class="mb-3 h2">カウンター</h3>
-        </div>
-        <div class="col-12 col-sm-4 mb-3">
-          <%= image_tag "sofa-seat.jpg", class: "about-img" %>
-          <h3 class="mb-3 h2">ソファ</h3>
-        </div>
-        <div class="col-12 col-sm-4 mb-3">
-          <%= image_tag "pair-seat.jpg", class: "about-img" %>
-          <h3 class="mb-3 h2">フラット</h3>
-        </div>
-      </div>
-
     </div>
   </div>
-</div>
+</section>
+
+<!-- 座席紹介 -->
+<section class="bh-section" id="SPACE">
+  <div class="container">
+    <p class="bh-eyebrow">Space</p>
+    <h2 class="bh-title">Space</h2>
+    <div class="bh-grid">
+      <figure class="bh-photo">
+        <%= image_tag "open-seat.jpg", alt: "カウンター席" %>
+        <figcaption>カウンター</figcaption>
+      </figure>
+      <figure class="bh-photo">
+        <%= image_tag "sofa-seat.jpg", alt: "ソファ席" %>
+        <figcaption>ソファ</figcaption>
+      </figure>
+      <figure class="bh-photo">
+        <%= image_tag "pair-seat.jpg", alt: "フラット席" %>
+        <figcaption>フラット</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
 <!-- お知らせ -->
 <% if @shop_config.is_show_news? || admin_signed_in? %>
-  <div class="zigzag text-white py-5" id="NEWS">
-    <% if admin_signed_in? %>
-      <%= link_to 'Newsの表示状態を変更する', update_is_show_news_path %>
-      <p>現在の状態：
-      <% if @shop_config.is_show_news? %>
-        表示中
-      <% else %>
-        非表示中
+  <section class="bh-section bh-section--cream" id="NEWS">
+    <div class="container">
+      <p class="bh-eyebrow">Information</p>
+      <h2 class="bh-title">News</h2>
+      <% if admin_signed_in? %>
+        <p class="bh-text">
+          現在の状態：<%= @shop_config.is_show_news? ? "表示中" : "非表示中" %>
+          （<%= link_to 'Newsの表示状態を変更する', update_is_show_news_path %>）
+        </p>
       <% end %>
-      </p>
-    <% end %>
-
-    <div class="category">
-      <div class="container">
-        <h2 class="text-center display pb-3">NEWS</h2>
+      <div class="bh-news">
+        <% @news.each do |new| %>
+          <article class="bh-card bh-news__item">
+            <time><%= new.created_at.strftime('%Y/%m/%d') %></time>
+            <h3><%= new.title %></h3>
+            <p><%= new.content %></p>
+          </article>
+        <% end %>
       </div>
-      <div>
-      
-        <div class="row">
-          <% @news.each do |new| %>
-            <div class="col-12 col-sm-6 mb-3">
-              <%= image_tag "babel_logo.jpg", class: "news-img" %>
-              <h3 class="h3"><%= new.title %></h3>
-              <p class="h4"><%= new.content %></p>
-              <p class="mb-3 h4"><%= new.created_at.strftime('%Y/%m/%d') %></p>
-            </div>
-          <% end %>
-        </div>
-        <%= link_to "もっとみる", news_index_path %>
-
+      <div class="text-center mt-4">
+        <%= link_to "もっとみる", news_index_path, class: "bh-btn bh-btn--ghost-dark" %>
       </div>
     </div>
-  </div>
+  </section>
 <% end %>
 
 <!-- アクセス -->
-<div class="zigzag text-white access pt-5" id = "ACCESS">
-  <div class="container text-center">
-    <h2 class="display pb-3">Access</h2>
-    <div class="mb-3 text-center">
-      <p class="mb-0">アクセス：阪急宝塚線「石橋阪大前」下車&ensp;<br class="d-block d-md-none">西改札口&ensp;徒歩3分</p>
-    </div>
-  </div>
-  <!-- 地図 -->
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3275.958986723292!2d135.4406222152352!3d34.80697368040731!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000f16d91f89ee3%3A0x44a9bf017518399d!2sbabelheim!5e0!3m2!1sja!2sjp!4v1659173127943!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-</div>
-
-<!-- 下部コンテンツ -->
-<div class="zigzag text-white mb-0" id = "NEWS">
-  <div class="container-fulid py-5">
-    <div class="container">
-      <div class="row">
-        <!-- 店舗情報 -->
-        <div class="col-12 col-lg-5">
-          <div class="stitch text-white">
-            <p class="text-center h4 mb-4"><a href="#" class="text-white">https://babelheim.com/</a></p>
-            <hr class="bg-white my-lg-4">
-            <address class="h5 font-weight-bold">
-              <p>店舗名:Babel Heim</p>
-              <p>住所:大阪府池田市石橋1-23-2</p>
-            </address>
-            <hr class="bg-white my-lg-4">
-            <div class="h4 font-weight-bold">
-              <p>OPEN <%= @shop_config.open_hour %> - CLOSE <%= @shop_config.close_hour %> (シーシャLO.<%= @shop_config.last_order_hour %>)</p>
-            </div>
-          </div>
-        </div>
+<section class="bh-section bh-section--dark" id="ACCESS">
+  <div class="container">
+    <p class="bh-eyebrow">Access</p>
+    <h2 class="bh-title">Access</h2>
+    <div class="bh-access">
+      <dl class="bh-access__info">
+        <dt>店舗名</dt>
+        <dd>Babel Heim</dd>
+        <dt>住所</dt>
+        <dd>大阪府池田市石橋1-23-2</dd>
+        <dt>アクセス</dt>
+        <dd>阪急宝塚線「石橋阪大前」西改札口 徒歩3分</dd>
+        <dt>営業時間</dt>
+        <dd><%= @shop_config.open_hour %> – <%= @shop_config.close_hour %><br><small>シーシャ L.O. <%= @shop_config.last_order_hour %></small></dd>
+        <dt>定休日</dt>
+        <dd>不定休</dd>
+      </dl>
+      <div class="bh-access__map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3275.958986723292!2d135.4406222152352!3d34.80697368040731!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000f16d91f89ee3%3A0x44a9bf017518399d!2sbabelheim!5e0!3m2!1sja!2sjp!4v1659173127943!5m2!1sja!2sjp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Babel Heim の地図"></iframe>
       </div>
     </div>
   </div>
-</div>
-<!-- フッター -->
-<footer class="py-3 m-0 zigzag-copy">
-  <p class="text-center mb-0"><small class="text-white">&copy; BabelHeim All Right Reserved.</small></p>
-</footer>
+</section>
 
-<!-- javascript はここから -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-<%= javascript_include_tag "modal" %>
+<%= render "shared/site_footer" %>
+
+</div>
 </body>
 </html>
