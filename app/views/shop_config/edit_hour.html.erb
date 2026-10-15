@@ -1,22 +1,31 @@
-<%= form_with(model: @shop_config, url: update_hour_path, local: true) do |form| %>
+<% content_for :title, "営業時間" %>
 
-  <div class="open_hour">
-    <%= form.label :open_hour %>
-    <%= form.text_field :open_hour %>
+<div class="adm-head">
+  <div>
+    <h1>営業時間</h1>
+    <p>トップページの営業時間・ラストオーダーの表示に使われます。</p>
   </div>
+</div>
 
-  <div class="close_hour">
-    <%= form.label :close_hour %>
-    <%= form.text_area :close_hour %>
-  </div>
-
-  <div class="last_order_hour">
-    <%= form.label :last_order_hour %>
-    <%= form.text_area :last_order_hour %>
-  </div>
-
-  <div class="submit">
-    <%= form.submit %>
-  </div>
-
-<% end %>
+<section class="adm-card adm-card--narrow">
+  <%= form_with(model: @shop_config, url: update_hour_path, local: true) do |form| %>
+    <div class="adm-row">
+      <div class="adm-field">
+        <%= form.label :open_hour, "開店" %>
+        <%= form.text_field :open_hour, placeholder: "14:00" %>
+      </div>
+      <div class="adm-field">
+        <%= form.label :close_hour, "閉店" %>
+        <%= form.text_field :close_hour, placeholder: "23:00" %>
+      </div>
+    </div>
+    <div class="adm-field">
+      <%= form.label :last_order_hour, "シーシャのラストオーダー" %>
+      <%= form.text_field :last_order_hour, placeholder: "21:30" %>
+    </div>
+    <div class="adm-actions">
+      <%= form.submit "保存する" %>
+      <%= link_to "キャンセル", root_path, class: "adm-btn adm-btn--ghost" %>
+    </div>
+  <% end %>
+</section>

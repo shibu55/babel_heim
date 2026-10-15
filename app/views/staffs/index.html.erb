@@ -1,31 +1,32 @@
-<div class="container mt-4">
+<% content_for :title, "スタッフ管理" %>
+
+<div class="adm-head">
   <h1>スタッフ管理</h1>
-  
-  <div class="mb-3">
-    <%= link_to '新規スタッフ登録', new_staff_path, class: 'btn btn-primary' %>
-    <%= link_to 'ホームに戻る', root_path, class: 'btn btn-secondary' %>
-    <%= link_to 'シフト管理に戻る', shifts_path, class: 'btn btn-secondary' %>
-  </div>
-  
-  <table class="table">
-    <thead>
-      <tr>
-        <th>名前</th>
-        <th>操作</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @staffs.each do |staff| %>
-        <tr>
-          <td><%= staff.name %></td>
-          <td>
-            <%= link_to '編集', edit_staff_path(staff), class: 'btn btn-sm btn-secondary' %>
-            <%= link_to '削除', staff_path(staff), method: :delete, 
-                        data: { confirm: '本当に削除しますか？' }, 
-                        class: 'btn btn-sm btn-danger' %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= link_to "スタッフを追加", new_staff_path, class: "adm-btn" %>
 </div>
+
+<section class="adm-card adm-card--narrow">
+  <% if @staffs.any? %>
+    <table class="adm-table">
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @staffs.each do |staff| %>
+          <tr>
+            <td><%= staff.name %></td>
+            <td>
+              <%= link_to "編集", edit_staff_path(staff) %>
+              <%= link_to "削除", staff_path(staff), method: :delete, data: { confirm: "#{staff.name} さんを削除しますか？" }, class: "adm-link-danger" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="adm-empty">まだスタッフが登録されていません。</p>
+  <% end %>
+</section>

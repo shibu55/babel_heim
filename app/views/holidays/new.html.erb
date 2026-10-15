@@ -1,58 +1,61 @@
-<h1>休日の設定画面</h1>
-<p>
-  <%= link_to 'ホーム画面へ', root_path %>
-</p>
+<% content_for :title, "休日設定" %>
 
-<%= form_with(model: @holiday, url: holidays_path, local: true) do |form| %>
-<h4>休日の設定</h4>
-  <div class="title">
-    <%= form.label :title %>
-    <%= form.select :title, [["店休日", "店休日"], ["臨時休業", "臨時休業"]], include_blank: "タイトルなし", selected: "店休日" %>
-  </div>
-
-  <div class="time">
-    <%= form.label :start_time %>
-    <%= form.date_select :start_time %>
-  </div>
-
-  <div class="submit">
-    <%= form.submit '追加する' %>
-  </div>
-
-<% end %>
-
-<%= form_with url: regular_holidays_path do |form| %>
-<h4>店休日の設定</h4>
-  <div class="month">
-    <%= form.label :month %>
-    <%= form.select :month, [["1", "1"], ["2", "2"], ["3", "3"], ["4", "4"], ["5", "5"], ["6", "6"], ["7", "7"], ["8", "8"], ["9", "9"], ["10", "10"], ["11", "11"], ["12", "12"]], selected: Time.current.month.to_s %>
-  </div>
-  <div class="day">
-    <%= form.label :day %>
-    <%= form.select :day, [["日", "0"], ["月", "1"], ["火", "2"], ["水", "3"], ["木", "4"], ["金", "5"], ["土", "6"]], selected: "4" %>
-  </div>
-
-  <div class="submit">
-    <%= form.submit '店休日を追加する' %>
-  </div>
-
-<% end %>
-
-<div>
-<%= month_calendar events: @holidays do |date, holidays| %>
-  <%= date.day %>
-  <% holidays.each do |holiday| %>
+<div class="adm-head">
   <div>
-    <p>
-      <%= holiday.title %>
-    </p>
-    <p>
-      <%= link_to 'Edit', edit_holiday_path(holiday.id) %>
-    </p>
-    <p>
-      <%= link_to 'Destroy',holiday_path(holiday.id), method: :delete, data: { confirm: 'Are you sure?' } %>
-    </p>
+    <h1>休日設定</h1>
+    <p>ここで登録した休日がトップページのカレンダーに表示されます。</p>
   </div>
-  <% end %>
-<% end %>
 </div>
+
+<div class="adm-grid adm-grid--2">
+  <section class="adm-card">
+    <h2>休日を1日追加<small>臨時休業などをピンポイントで登録します</small></h2>
+    <%= form_with(model: @holiday, url: holidays_path, local: true) do |form| %>
+      <div class="adm-field">
+        <%= form.label :title, "種類" %>
+        <%= form.select :title, [["店休日", "店休日"], ["臨時休業", "臨時休業"]], include_blank: "タイトルなし", selected: "店休日" %>
+      </div>
+      <div class="adm-field">
+        <%= form.label :start_time, "日付" %>
+        <%= form.date_field :start_time, value: Date.current %>
+      </div>
+      <div class="adm-actions">
+        <%= form.submit "追加する" %>
+      </div>
+    <% end %>
+  </section>
+
+  <section class="adm-card">
+    <h2>店休日をまとめて追加<small>指定した月の、指定した曜日をすべて「店休日」にします</small></h2>
+    <%= form_with url: regular_holidays_path, local: true do |form| %>
+      <div class="adm-row">
+        <div class="adm-field">
+          <%= form.label :month, "月" %>
+          <%= form.select :month, (1..12).map { |m| ["#{m}月", m.to_s] }, selected: Time.current.month.to_s %>
+        </div>
+        <div class="adm-field">
+          <%= form.label :day, "曜日" %>
+          <%= form.select :day, [["日曜", "0"], ["月曜", "1"], ["火曜", "2"], ["水曜", "3"], ["木曜", "4"], ["金曜", "5"], ["土曜", "6"]], selected: "4" %>
+        </div>
+      </div>
+      <div class="adm-actions">
+        <%= form.submit "店休日を追加する" %>
+      </div>
+    <% end %>
+  </section>
+</div>
+
+<section class="adm-card adm-calendar">
+  <%= month_calendar events: @holidays do |date, holidays| %>
+    <span class="adm-cal-day"><%= date.day %></span>
+    <% holidays.each do |holiday| %>
+      <div class="adm-cal-item">
+        <span class="adm-tag"><%= holiday.title.presence || "休日" %></span>
+        <div class="adm-mini">
+          <%= link_to "編集", edit_holiday_path(holiday.id) %>
+          <%= link_to "削除", holiday_path(holiday.id), method: :delete, data: { confirm: "#{date.month}/#{date.day} の休日を削除しますか？" }, class: "adm-link-danger" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</section>

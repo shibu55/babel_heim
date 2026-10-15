@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title><%= content_for?(:title) ? "#{yield(:title)} | " : "" %>BabelHeim 管理</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+    <%# トップページ用の style.css などは読まず、管理画面用の admin.css だけを使う %>
+    <%= stylesheet_link_tag "admin", media: "all", "data-turbolinks-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= favicon_link_tag "/hookah.svg" %>
+  </head>
+
+  <body class="adm">
+    <header class="adm-header">
+      <div class="adm-header__inner">
+        <%= link_to root_path, class: "adm-brand" do %>
+          Babel Heim <span>管理</span>
+        <% end %>
+        <% if admin_signed_in? %>
+          <nav class="adm-nav">
+            <%= link_to "休日設定", new_holiday_path, class: ("is-active" if controller_name == "holidays") %>
+            <%= link_to "シフト", shifts_path, class: ("is-active" if controller_name == "shifts") %>
+            <%= link_to "スタッフ", staffs_path, class: ("is-active" if controller_name == "staffs") %>
+            <%= link_to "営業時間", edit_hour_path, class: ("is-active" if controller_name == "shop_config") %>
+            <%= link_to "News", news_index_path, class: ("is-active" if controller_name == "news") %>
+            <%= link_to "サイトを見る", root_path, class: "adm-nav__sub" %>
+            <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "adm-nav__sub" %>
+          </nav>
+        <% end %>
+      </div>
+    </header>
+
+    <main class="adm-main">
+      <% if notice.present? %>
+        <p class="adm-flash adm-flash--notice"><%= notice %></p>
+      <% end %>
+      <% if alert.present? %>
+        <p class="adm-flash adm-flash--alert"><%= alert %></p>
+      <% end %>
+
+      <%= yield %>
+    </main>
+  </body>
+</html>

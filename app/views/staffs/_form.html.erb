@@ -1,0 +1,19 @@
+<section class="adm-card adm-card--narrow">
+  <%= form_with model: staff, local: true do |form| %>
+    <% if staff.errors.any? %>
+      <ul class="adm-errors">
+        <% staff.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <div class="adm-field">
+      <%= form.label :name, "名前" %>
+      <%= form.text_field :name, autofocus: true %>
+    </div>
+    <div class="adm-actions">
+      <%= form.submit submit_label %>
+      <%= link_to "キャンセル", staffs_path, class: "adm-btn adm-btn--ghost" %>
+    </div>
+  <% end %>
+</section>

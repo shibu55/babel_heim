@@ -1,0 +1,16 @@
+<section class="adm-card adm-card--narrow">
+  <%= form_with(model: news, local: true) do |form| %>
+    <div class="adm-field">
+      <%= form.label :title, "タイトル" %>
+      <%= form.text_field :title %>
+    </div>
+    <div class="adm-field">
+      <%= form.label :content, "本文" %>
+      <%= form.text_area :content %>
+    </div>
+    <div class="adm-actions">
+      <%= form.submit submit_label %>
+      <%= link_to "キャンセル", news_index_path, class: "adm-btn adm-btn--ghost" %>
+    </div>
+  <% end %>
+</section>
