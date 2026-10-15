@@ -53,7 +53,8 @@ services:
       FORCE_SSL: ${FORCE_SSL:-true}
       # 設定すると Thruster が Let's Encrypt で証明書を取得し 443 で待ち受ける
       TLS_DOMAIN: ${TLS_DOMAIN:-}
-      WEB_CONCURRENCY: 1
+      # Puma をシングルモード（1 プロセス）で動かす。1 ワーカーのクラスターモードは管理プロセスの分メモリが無駄になる
+      WEB_CONCURRENCY: 0
       # アクセスは Rails のログに残るので、Thruster のリクエストログは出さない
       LOG_REQUESTS: "false"
       RAILS_MAX_THREADS: 3
