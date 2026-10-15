@@ -1,4 +1,5 @@
 class ShopConfigController < ApplicationController
+  layout "admin"
   before_action :authenticate_admin!
   def edit_hour
     @shop_config = ShopConfig.first
@@ -9,7 +10,7 @@ class ShopConfigController < ApplicationController
     if @shop_config.update(shop_config_parameter)
       redirect_to root_path
     else
-      render 'edit'
+      render :edit_hour
     end
   end
 

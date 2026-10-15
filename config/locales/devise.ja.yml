@@ -1,0 +1,23 @@
+# devise.en.yml のうち、この管理画面で使うものを日本語にしたもの
+ja:
+  devise:
+    failure:
+      already_authenticated: "すでにログインしています。"
+      inactive: "アカウントが有効になっていません。"
+      invalid: "メールアドレスまたはパスワードが違います。"
+      locked: "アカウントがロックされています。"
+      last_attempt: "あと1回失敗するとアカウントがロックされます。"
+      not_found_in_database: "メールアドレスまたはパスワードが違います。"
+      timeout: "一定時間が経過したため、再度ログインしてください。"
+      unauthenticated: "ログインしてください。"
+      unconfirmed: "メールアドレスの確認が済んでいません。"
+    passwords:
+      no_token: "このページにはアクセスできません。パスワード再設定メールのリンクから開いてください。"
+      send_instructions: "パスワードの再設定方法をメールでお送りしました。"
+      send_paranoid_instructions: "登録済みのメールアドレスであれば、パスワードの再設定方法をメールでお送りしました。"
+      updated: "パスワードを変更しました。ログインしました。"
+      updated_not_active: "パスワードを変更しました。"
+    sessions:
+      signed_in: "ログインしました。"
+      signed_out: "ログアウトしました。"
+      already_signed_out: "ログアウトしました。"

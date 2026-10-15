@@ -1,4 +1,5 @@
 class ShiftsController < ApplicationController
+  layout "admin"
   before_action :authenticate_admin!
   before_action :set_shift, only: [:edit, :update, :destroy]
 

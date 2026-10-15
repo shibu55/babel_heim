@@ -1,16 +1,7 @@
-<%= form_with(model: @news, local: true) do |form| %>
-<h4>Newsの追加</h4>
-  <div class="title">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-  <div class="content">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
-  </div>
+<% content_for :title, "Newsの追加" %>
 
-  <div class="submit">
-    <%= form.submit '追加する' %>
-  </div>
+<div class="adm-head">
+  <h1>Newsの追加</h1>
+</div>
 
-<% end %>
+<%= render "form", news: @news, submit_label: "追加する" %>

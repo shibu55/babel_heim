@@ -1,8 +1,10 @@
 class NewsController < ApplicationController
+  # 一覧はお客さん向けのページなので管理画面のレイアウトにしない
+  layout "admin", except: [:index]
   # 一覧と詳細はお客さん向けに公開。それ以外は管理者のみ。
   before_action :authenticate_admin!, except: [:index, :show]
   def index
-    @news = News.all
+    @news = News.order(created_at: :desc)
   end
 
   def new

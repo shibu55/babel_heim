@@ -1,0 +1,29 @@
+<% if admin_signed_in? %>
+  <div class="bh-adminbar">
+    <span class="bh-adminbar__label"><i class="fas fa-user-shield"></i> 管理者画面</span>
+    <%= link_to "営業時間の編集", edit_hour_path %>
+    <%= link_to "休日設定", new_holiday_path %>
+    <%= link_to "シフト管理", shifts_path %>
+    <%= link_to "Logout", destroy_admin_session_path, method: :delete %>
+  </div>
+<% end %>
+
+<header class="bh-header">
+  <nav class="navbar navbar-expand-md navbar-light container">
+    <%= link_to "Babel Heim", root_path(anchor: "TOP"), class: "navbar-brand bh-brand" %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbar-header" aria-expanded="false" aria-label="ナビゲーションの切替">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-header">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><%= link_to 'Attending', root_path(anchor: 'ATTENDING'), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to 'Calendar', root_path(anchor: 'CALENDAR'), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to 'About', root_path(anchor: 'ABOUT'), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to 'Space', root_path(anchor: 'SPACE'), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to 'News', news_index_path, class: "nav-link #{'is-active' if controller_name == 'news'}" %></li>
+        <li class="nav-item"><%= link_to 'Access', root_path(anchor: 'ACCESS'), class: "nav-link" %></li>
+      </ul>
+      <%= render "shared/site_sns" %>
+    </div>
+  </nav>
+</header>
