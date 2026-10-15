@@ -12,7 +12,7 @@ namespace :db do
     dump = ["mysqldump", "--single-transaction", "--no-tablespaces", "--routines",
             "-h", cfg[:host].to_s, "-u", cfg[:username].to_s, cfg[:database].to_s]
 
-    Tempfile.create(["backup", ".sql.gz"]) do |file|
+    Tempfile.create(["backup", ".sql.gz"], binmode: true) do |file|
       gz = Zlib::GzipWriter.new(file)
       Open3.popen3({ "MYSQL_PWD" => cfg[:password].to_s }, *dump) do |_stdin, stdout, stderr, wait|
         IO.copy_stream(stdout, gz)

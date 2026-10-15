@@ -40,5 +40,13 @@ main に push（PR をマージ）すると GitHub Actions (`.github/workflows/d
 - 毎日 23:00 全座席を空席に戻す
 - 毎日 4:30 DB を S3 にバックアップ（30 日保持）
 
+### バックアップから戻す
+サーバーで（SSM のセッションから）:
+```
+cd /opt/babelheim
+docker compose exec web bin/rails db:backups                                   # 一覧
+docker compose exec -e KEY=db/xxx.sql.gz -e CONFIRM=yes web bin/rails db:restore # 上書きで復元
+```
+
 ### インフラ
 EC2・ECR・S3・IAM などは [shibu55_terraform](https://github.com/shibu55/shibu55_terraform) の `main/babelheim.tf` で管理している。
