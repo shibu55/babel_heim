@@ -31,7 +31,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:?RAILS_MASTER_KEY is required}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:?SECRET_KEY_BASE is required}
       DB_HOST: db
       DB_PASSWORD: ${DB_PASSWORD}
       FORCE_SSL: ${FORCE_SSL:-true}
@@ -53,7 +53,9 @@ services:
         condition: service_healthy
     command: ["supercronic", "-passthrough-logs", "config/crontab"]
     environment:
-      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      BACKUP_BUCKET: ${BACKUP_BUCKET:-}
+      AWS_REGION: ap-northeast-1
       DB_HOST: db
       DB_PASSWORD: ${DB_PASSWORD}
 

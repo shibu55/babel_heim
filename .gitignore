@@ -14,7 +14,6 @@
 /public/assets
 .byebug_history
 
-# 復号鍵。本番はサーバーの .env (RAILS_MASTER_KEY) で渡す。
 /config/*.key
 /.env
 

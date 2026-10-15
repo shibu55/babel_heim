@@ -3,3 +3,6 @@
 
 # 閉店後に全座席を空席に戻す
 0 23 * * * bin/rails seats_reset:open
+
+# DB を S3 にバックアップする（BACKUP_BUCKET が未設定ならスキップ）
+30 4 * * * bin/rails db:backup

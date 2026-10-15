@@ -14,6 +14,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "devise"
 gem "simple_calendar", "~> 3.1"
 gem "rails-i18n", "~> 8.0"
+gem "aws-sdk-s3", require: false
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
