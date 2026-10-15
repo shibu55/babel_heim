@@ -20,6 +20,18 @@ RUN apt-get update -qq && \
     ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# 定期実行 (config/crontab) 用。compose の scheduler サービスで使う。
+ARG TARGETARCH
+ARG SUPERCRONIC_VERSION=v0.2.49
+RUN case "${TARGETARCH}" in \
+      arm64) sha=02aa0cb229ba09050cba6638059dadb9eedc2276632ea43d6a57a2f8c1629dd5 ;; \
+      amd64) sha=a53ae236602c7338aba3fbaff40bda6300eae3b9fedb8261eb06cfe3724430c1 ;; \
+      *) echo "unsupported arch: ${TARGETARCH}" && exit 1 ;; \
+    esac && \
+    curl -fsSLo /usr/local/bin/supercronic "https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_VERSION}/supercronic-linux-${TARGETARCH}" && \
+    echo "${sha}  /usr/local/bin/supercronic" | sha256sum -c - && \
+    chmod +x /usr/local/bin/supercronic
+
 # Set production environment variables and enable jemalloc for reduced memory usage and latency.
 # DB の日時は JST で保存されている (default_timezone = :local)
 ENV TZ="Asia/Tokyo" \

@@ -37,6 +37,18 @@ services:
     volumes:
       - storage:/rails/storage
 
+  scheduler:
+    image: ${WEB_IMAGE:-babelheim-web:local}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["supercronic", "-passthrough-logs", "config/crontab"]
+    environment:
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      DB_HOST: db
+      DB_PASSWORD: ${DB_PASSWORD}
+
 volumes:
   db-data:
   storage:
