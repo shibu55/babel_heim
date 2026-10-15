@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # デプロイ時のヘルスチェック用
+  get "up" => "rails/health#show", as: :rails_health_check
+
   root to: 'home#index'
   devise_for :admins, controllers: {
     sessions: 'admins/sessions'

@@ -1,0 +1,8 @@
+# compose の scheduler サービス (supercronic) が読む。時刻は TZ=Asia/Tokyo。
+# 書式: 分 時 日 月 曜日 コマンド
+
+# 閉店後に全座席を空席に戻す
+0 23 * * * bin/rails seats_reset:open
+
+# DB を S3 にバックアップする（BACKUP_BUCKET が未設定ならスキップ）
+30 4 * * * bin/rails db:backup

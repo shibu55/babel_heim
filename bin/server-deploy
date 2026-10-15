@@ -1,0 +1,33 @@
+#!/bin/bash
+# 本番サーバー上で SSM 経由で実行される（.github/workflows/deploy.yml から送られる）。
+# 使い方: server-deploy <イメージ URI>   ※ compose.yaml はカレントディレクトリに置かれている前提
+set -euo pipefail
+
+image="$1"
+registry="${image%%/*}"
+cd /opt/babelheim
+
+# SSM Parameter Store (/babelheim/*) から .env を作る。イメージだけはデプロイ対象で上書きする。
+aws ssm get-parameters-by-path --path /babelheim --with-decryption \
+  --query 'Parameters[].[Name,Value]' --output text \
+  | sed -E 's#^/babelheim/([^[:space:]]+)[[:space:]]+#\1=#' \
+  | grep -v '^WEB_IMAGE=' > .env.new
+echo "WEB_IMAGE=${image}" >> .env.new
+chmod 600 .env.new
+mv .env.new .env
+
+aws ecr get-login-password | docker login --username AWS --password-stdin "$registry"
+docker compose pull web
+docker compose up -d --remove-orphans
+docker image prune -f
+
+# web が応答するまで待つ（最大 2 分）
+for _ in $(seq 1 40); do
+  if docker compose exec -T web curl -fsS -o /dev/null http://localhost:3000/up; then
+    echo "deploy ok: ${image}"
+    exit 0
+  fi
+  sleep 3
+done
+docker compose logs --tail 50 web
+exit 1
