@@ -17,7 +17,9 @@ env:
   AWS_REGION: ap-northeast-1
   AWS_ROLE_ARN: arn:aws:iam::463120869115:role/babelheim-deploy
   ECR_REPOSITORY: 463120869115.dkr.ecr.ap-northeast-1.amazonaws.com/babelheim
-  INSTANCE_ID: i-060e11f768f6fe0da
+  # このタグを持つインスタンスにデプロイする（shibu55_terraform の main/babelheim.tf で付与）
+  DEPLOY_TARGET_TAG: DeployTarget
+  DEPLOY_TARGET_VALUE: babelheim
 
 jobs:
   deploy:
@@ -60,7 +62,7 @@ jobs:
           ]}' > params.json
 
           command_id=$(aws ssm send-command \
-            --instance-ids "$INSTANCE_ID" \
+            --targets "Key=tag:${DEPLOY_TARGET_TAG},Values=${DEPLOY_TARGET_VALUE}" \
             --document-name AWS-RunShellScript \
             --comment "deploy ${GITHUB_SHA::7}" \
             --parameters file://params.json \
@@ -69,11 +71,15 @@ jobs:
           status=Pending
           for _ in $(seq 1 100); do
             sleep 6
-            status=$(aws ssm get-command-invocation --command-id "$command_id" --instance-id "$INSTANCE_ID" --query Status --output text 2>/dev/null || echo Pending)
+            status=$(aws ssm list-commands --command-id "$command_id" --query 'Commands[0].Status' --output text)
             case "$status" in Pending|InProgress|Delayed) continue ;; *) break ;; esac
           done
 
-          aws ssm get-command-invocation --command-id "$command_id" --instance-id "$INSTANCE_ID" \
-            --query '[StandardOutputContent,StandardErrorContent]' --output text
-          echo "status: $status"
+          aws ssm list-command-invocations --command-id "$command_id" --details \
+            --query 'CommandInvocations[].[InstanceId,Status,CommandPlugins[0].Output]' --output text
+
+          # タグに一致するインスタンスが 0 台でもコマンド自体は Success になるため、台数も確認する
+          target_count=$(aws ssm list-commands --command-id "$command_id" --query 'Commands[0].TargetCount' --output text)
+          echo "status: $status, targets: $target_count"
+          test "$target_count" = 1
           test "$status" = Success
