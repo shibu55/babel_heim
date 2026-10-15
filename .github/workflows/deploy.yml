@@ -1,0 +1,79 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  id-token: write # OIDC で AWS のロールを引き受けるため
+  contents: read
+
+env:
+  AWS_REGION: ap-northeast-1
+  AWS_ROLE_ARN: arn:aws:iam::463120869115:role/babelheim-deploy
+  ECR_REPOSITORY: 463120869115.dkr.ecr.ap-northeast-1.amazonaws.com/babelheim
+  INSTANCE_ID: i-060e11f768f6fe0da
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04-arm # サーバー (t4g) と同じ arm64 でビルドする
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: aws-actions/amazon-ecr-login@v2
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+            ${{ env.ECR_REPOSITORY }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Deploy to server via SSM
+        run: |
+          image="${ECR_REPOSITORY}:${GITHUB_SHA}"
+          compose_b64=$(base64 -w0 compose.yaml)
+          script_b64=$(base64 -w0 bin/server-deploy)
+          jq -n --arg c "$compose_b64" --arg s "$script_b64" --arg i "$image" '{commands: [
+            "set -euo pipefail",
+            "mkdir -p /opt/babelheim && cd /opt/babelheim",
+            "echo \($c) | base64 -d > compose.yaml",
+            "echo \($s) | base64 -d > server-deploy && chmod +x server-deploy",
+            "./server-deploy \($i)"
+          ]}' > params.json
+
+          command_id=$(aws ssm send-command \
+            --instance-ids "$INSTANCE_ID" \
+            --document-name AWS-RunShellScript \
+            --comment "deploy ${GITHUB_SHA::7}" \
+            --parameters file://params.json \
+            --query Command.CommandId --output text)
+
+          status=Pending
+          for _ in $(seq 1 100); do
+            sleep 6
+            status=$(aws ssm get-command-invocation --command-id "$command_id" --instance-id "$INSTANCE_ID" --query Status --output text 2>/dev/null || echo Pending)
+            case "$status" in Pending|InProgress|Delayed) continue ;; *) break ;; esac
+          done
+
+          aws ssm get-command-invocation --command-id "$command_id" --instance-id "$INSTANCE_ID" \
+            --query '[StandardOutputContent,StandardErrorContent]' --output text
+          echo "status: $status"
+          test "$status" = Success
