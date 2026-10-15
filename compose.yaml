@@ -9,6 +9,7 @@ x-app-env: &app-env
   AWS_REGION: ap-northeast-1
 
 # コンテナのログ (docker logs) がディスクを埋めないよう、1 コンテナあたり最大 10MB x 5 ファイルに制限する
+# 本番は compose.production.yaml で CloudWatch Logs に切り替える
 x-logging: &logging
   driver: json-file
   options:
@@ -53,6 +54,8 @@ services:
       # 設定すると Thruster が Let's Encrypt で証明書を取得し 443 で待ち受ける
       TLS_DOMAIN: ${TLS_DOMAIN:-}
       WEB_CONCURRENCY: 1
+      # アクセスは Rails のログに残るので、Thruster のリクエストログは出さない
+      LOG_REQUESTS: "false"
       RAILS_MAX_THREADS: 3
     ports:
       - "${HTTP_PORT:-80}:80"
