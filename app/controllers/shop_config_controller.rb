@@ -1,4 +1,5 @@
 class ShopConfigController < ApplicationController
+  before_action :authenticate_admin!
   def edit_hour
     @shop_config = ShopConfig.first
   end

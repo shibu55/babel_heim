@@ -1,4 +1,6 @@
 class NewsController < ApplicationController
+  # 一覧と詳細はお客さん向けに公開。それ以外は管理者のみ。
+  before_action :authenticate_admin!, except: [:index, :show]
   def index
     @news = News.all
   end
