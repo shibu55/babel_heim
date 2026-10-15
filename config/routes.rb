@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  # デプロイ時のヘルスチェック用
-  get "up" => "rails/health#show", as: :rails_health_check
+  # ヘルスチェック用（Route 53 とデプロイ確認）。DB まで確認する
+  get "up" => "health#show", as: :rails_health_check
 
   root to: 'home#index'
   devise_for :admins, controllers: {

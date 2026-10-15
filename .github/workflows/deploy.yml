@@ -53,11 +53,13 @@ jobs:
         run: |
           image="${ECR_REPOSITORY}:${GITHUB_SHA}"
           compose_b64=$(base64 -w0 compose.yaml)
+          compose_prod_b64=$(base64 -w0 compose.production.yaml)
           script_b64=$(base64 -w0 bin/server-deploy)
-          jq -n --arg c "$compose_b64" --arg s "$script_b64" --arg i "$image" '{commands: [
+          jq -n --arg c "$compose_b64" --arg p "$compose_prod_b64" --arg s "$script_b64" --arg i "$image" '{commands: [
             "set -euo pipefail",
             "mkdir -p /opt/babelheim && cd /opt/babelheim",
             "echo \($c) | base64 -d > compose.yaml",
+            "echo \($p) | base64 -d > compose.production.yaml",
             "echo \($s) | base64 -d > server-deploy && chmod +x server-deploy",
             "./server-deploy \($i)"
           ]}' > params.json

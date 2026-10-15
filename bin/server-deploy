@@ -1,6 +1,7 @@
 #!/bin/bash
 # 本番サーバー上で SSM 経由で実行される（.github/workflows/deploy.yml から送られる）。
-# 使い方: server-deploy <イメージ URI>   ※ compose.yaml はカレントディレクトリに置かれている前提
+# 使い方: server-deploy <イメージ URI>   ※ compose.yaml / compose.production.yaml は /opt/babelheim に置かれている前提
+# .env の COMPOSE_FILE (SSM の /babelheim/COMPOSE_FILE) で両方が読まれる
 set -euo pipefail
 
 image="$1"

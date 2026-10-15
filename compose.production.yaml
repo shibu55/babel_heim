@@ -1,0 +1,17 @@
+# 本番サーバーでのみ compose.yaml に重ねて使う（.env の COMPOSE_FILE で指定される）。
+# ログを CloudWatch Logs のロググループ "babelheim" に送る（保持 30 日、shibu55_terraform で作成）。
+x-cloudwatch-logging: &cloudwatch-logging
+  driver: awslogs
+  options:
+    awslogs-region: ap-northeast-1
+    awslogs-group: babelheim
+    tag: "{{.Name}}"
+    mode: non-blocking
+
+services:
+  db:
+    logging: *cloudwatch-logging
+  web:
+    logging: *cloudwatch-logging
+  scheduler:
+    logging: *cloudwatch-logging
