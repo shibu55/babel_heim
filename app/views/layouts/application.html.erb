@@ -6,10 +6,10 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%# 旧 application.css (sprockets) の require 順を再現している %>
+    <%= stylesheet_link_tag "simple_calendar", "holidays", "home", "news", "scaffolds", "seats", "shifts", "shop_config", "staffs", "style", "application", media: "all", "data-turbolinks-track": "reload" %>
+    <%= javascript_importmap_tags %>
     <%= favicon_link_tag "/hookah.svg" %>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
   </head>
 
   <body>

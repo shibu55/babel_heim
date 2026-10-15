@@ -1,0 +1,8 @@
+# t4g.micro (メモリ 1GB) で Rails と同居させるための省メモリ設定
+[mysqld]
+performance_schema = OFF
+innodb_buffer_pool_size = 64M
+max_connections = 30
+character-set-server = utf8mb4
+collation-server = utf8mb4_0900_ai_ci
+default-time-zone = '+09:00'
