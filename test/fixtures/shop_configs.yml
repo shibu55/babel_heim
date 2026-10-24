@@ -1,11 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  open_hour: MyString
-  close_hour: MyString
-  is_show_news: false
-
-two:
-  open_hour: MyString
-  close_hour: MyString
-  is_show_news: false
+  open_hour: "18:00"
+  close_hour: "26:00"
+  last_order_hour: "25:00"
+  is_show_news: true
