@@ -2,8 +2,8 @@
 
 one:
   staff: one
-  start_time: 2025-08-03 11:17:10
+  start_time: <%= 1.day.from_now.beginning_of_day.to_fs(:db) %>
 
 two:
   staff: two
-  start_time: 2025-08-03 11:17:10
+  start_time: <%= 2.days.from_now.beginning_of_day.to_fs(:db) %>
